@@ -4,7 +4,15 @@ public class Program
 {
     public static int Main(string[] args)
     {
-        Console.WriteLine("Hello World!");
+        int[,] board = new int[6,7];
+        PrintGameField(board);
+
+        /*
+        do
+        {
+            PrintGameField(board);
+        }
+        while (IsGameEnd(board));*/
         return 0;
     }
 
@@ -15,10 +23,10 @@ public class Program
     /// Walls are blue or other chars, player one is red and/or 'x' , player two is yellow and/or 'o'.
     /// </remarks>
     /// <param name="field">The field.</param>
-    /*private static void PrintGameField(int[,] field)
+    private static void PrintGameField(int[,] field)
     {
-        // Your code here!  
-    }*/
+        
+    }
 
     /// <summary>
     /// Adds the player disc to the game board on the given column.
@@ -56,8 +64,8 @@ public class Program
     /// <returns>
     ///   <c>true</c> if the game has ended; otherwise, <c>false</c>.
     /// </returns>
-    /*private static bool IsGameEnd(int[,] field, out int winnerPlayer)
+    private static bool IsGameEnd(int[,] field/*, out int winnerPlayer*/)
     {
-        // Your code here!  
-    }*/
+        return false;
+    }
 }
