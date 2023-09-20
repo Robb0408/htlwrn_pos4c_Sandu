@@ -38,6 +38,7 @@ public class Program
     /// <param name="field">The field.</param>
     private static void PrintGameField(int[,] field)
     {
+        Console.Clear();
         // Print first row of only blue background
         Console.BackgroundColor = ConsoleColor.Blue;
         for (int i = 0; i < field.GetLength(1) * 4 + 2; i++)
@@ -54,8 +55,10 @@ public class Program
             // Columns
             for (int j = 0; j < field.GetLength(1); j++)
             {
-                if (field[i, j] == 0)
-                    Console.BackgroundColor = ConsoleColor.Black;
+                if (field[i, j] != 0)
+                    Console.BackgroundColor = ConsoleColor.Yellow;
+                else
+                    Console.ResetColor();
                 Console.Write("  ");
                 Console.BackgroundColor = ConsoleColor.Blue;
                 Console.Write("  ");
@@ -72,13 +75,10 @@ public class Program
         for (int i = 1; i <= field.GetLength(1) * 4; i++)
         {
             if (i % 4 == 0)
-            {
                 Console.Write(i / 4);
-            }
             else 
-            { 
                 Console.Write(" ");
-            }
+            
         }
         Console.WriteLine();
     }
@@ -98,6 +98,14 @@ public class Program
     /// </returns>
     private static bool AddPlayerDisc(int[,] field, int playerNr, int addOnColumn)
     {
+        for (int i = 0; i < field.GetLength(0); i++)
+        {
+            if (field[i, addOnColumn - 1] != 0 || i == field.GetLength(0) - 1)
+            {
+                field[i - 1, addOnColumn - 1] = playerNr;
+                return true;
+            }
+        }
         return false;
     }
 
@@ -121,7 +129,7 @@ public class Program
     /// </returns>
     private static bool IsGameEnd(int[,] field, out int winnerPlayer)
     {
-        winnerPlayer = 1;
+        winnerPlayer = 0;
         return true;
     }
 }
