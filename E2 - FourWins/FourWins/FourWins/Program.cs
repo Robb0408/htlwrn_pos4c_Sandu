@@ -25,7 +25,20 @@ public class Program
     /// <param name="field">The field.</param>
     private static void PrintGameField(int[,] field)
     {
-        
+        for (int i = 0; i < field.GetLength(0) * 4 + 2; i++)
+        {
+            Console.BackgroundColor = ConsoleColor.Blue;
+            Console.Write(" ");
+        }
+        Console.WriteLine();
+        for (int i = 0; i < field.GetLength(0); i++)
+        {
+            Console.Write("  ");
+            for (int j = 0; j < field.GetLength(1); j++)
+            {
+
+            }
+        }
     }
 
     /// <summary>
