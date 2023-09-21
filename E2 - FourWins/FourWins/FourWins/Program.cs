@@ -6,7 +6,7 @@ public class Program
     {
         int[,] board;
         int width, height, column, winnerPlayer;
-        bool player = false; //false: Player 1, true: Player 2
+        bool player = false; // false: Player 1 (red), true: Player 2 (yellow)
         if (args.Length > 0)
         {
             string[] sizeArr = args[0].Split("x");
@@ -15,16 +15,21 @@ public class Program
             else
                 width = 7;
             if (int.TryParse(sizeArr[1], out int y))
-                height = y; 
+                height = y;
             else
                 height = 6;
-            if (x >= 4 && y >= 4) //minimum size
-                board = new int[x, y];
-            else
-                return -1;
+            if (height < 4 && width < 4) // Minimum size
+            {
+                width = 7;
+                height = 6;
+            }  
         }
         else
-            board = new int[6, 7];
+        {
+            width = 7;
+            height = 6;
+        }
+        board = new int[height, width];
         // Game loop
         do
         {
@@ -38,7 +43,15 @@ public class Program
                 Console.WriteLine($"Player Nr. {((player) ? 2 : 1)}");
                 Console.ResetColor();
                 Console.Write("Please choose a column: ");
-                column = Convert.ToInt32(Console.ReadLine());
+                string? input = Console.ReadLine();
+                while (input == null){
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Invalid input");
+                    Console.ResetColor();
+                    Console.Write("Please choose a column: ");
+                    input = Console.ReadLine();
+                }
+                column = Convert.ToInt32(input);
             }
             while (!AddPlayerDisc(board, (player) ? 1 : 0, column));
             player = !player;
@@ -168,6 +181,7 @@ public class Program
     /// </returns>
     private static bool IsGameEnd(int[,] field, out int winnerPlayer)
     {
+        winnerPlayer = -1;
         for (int i = 0; i < field.GetLength(0); i++)
         {
             for (int j = 0; j < field.GetLength(1); j++)
@@ -175,11 +189,22 @@ public class Program
                 if (field[i, j] == 0)
                 {
                     winnerPlayer = 0;
-                    return false;
                 }
             }
         }
-        winnerPlayer = -1;
-        return true;
+        if (winnerPlayer == -1)
+            return true;
+        for (int i = 0; i < field.GetLength(0) - 3; i++)
+        {
+            for (int j = 0; j < field.GetLength(1); j++)
+            {
+                if (field[i, j] == field[i + 1, j] && field[i, j] == field[i + 2, j] && field[i, j] == field[i + 3, j])
+                {
+                    winnerPlayer = field[i, j];
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
