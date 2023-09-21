@@ -4,15 +4,53 @@ public class Program
 {
     public static int Main(string[] args)
     {
-        int[,] board = new int[6,7];
-        PrintGameField(board);
-
-        /*
+        int[,] board;
+        int width, height, column, winnerPlayer;
+        bool player = false; //false: Player 1, true: Player 2
+        if (args.Length > 0)
+        {
+            string[] sizeArr = args[0].Split("x");
+            if (int.TryParse(sizeArr[0], out int x))
+                width = x;
+            else
+                width = 7;
+            if (int.TryParse(sizeArr[1], out int y))
+                height = y; 
+            else
+                height = 6;
+            if (x >= 4 && y >= 4) //minimum size
+                board = new int[x, y];
+            else
+                return -1;
+        }
+        else
+            board = new int[6, 7];
+        // Game loop
         do
         {
             PrintGameField(board);
+            do
+            {
+                if (player)
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                else 
+                    Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"Player Nr. {((player) ? 2 : 1)}");
+                Console.ResetColor();
+                Console.Write("Please choose a column: ");
+                column = Convert.ToInt32(Console.ReadLine());
+            }
+            while (!AddPlayerDisc(board, (player) ? 1 : 0, column));
+            player = !player;
+            IsGameEnd(board, out int winner);
+            winnerPlayer = winner;
         }
-        while (IsGameEnd(board));*/
+        while (winnerPlayer == 0);
+        PrintGameField(board);
+        if (winnerPlayer == -1)
+            Console.WriteLine("Draw - nobody has won!");
+        else
+            Console.WriteLine($"Player {winnerPlayer} has won!");
         return 0;
     }
 
@@ -25,20 +63,51 @@ public class Program
     /// <param name="field">The field.</param>
     private static void PrintGameField(int[,] field)
     {
-        for (int i = 0; i < field.GetLength(0) * 4 + 2; i++)
+        Console.Clear();
+        // Print first row of blue background
+        Console.BackgroundColor = ConsoleColor.Blue;
+        for (int i = 0; i < field.GetLength(1) * 4 + 2; i++)
         {
-            Console.BackgroundColor = ConsoleColor.Blue;
             Console.Write(" ");
         }
         Console.WriteLine();
+        // Print board elements shown as square fields surrounded by blue borders
+        // Rows
         for (int i = 0; i < field.GetLength(0); i++)
         {
+            Console.BackgroundColor = ConsoleColor.Blue;
             Console.Write("  ");
+            // Columns
             for (int j = 0; j < field.GetLength(1); j++)
             {
-
+                if (field[i, j] == 1)
+                    Console.BackgroundColor = ConsoleColor.Red;
+                else if (field[i, j] == 2) 
+                    Console.BackgroundColor = ConsoleColor.Yellow;
+                else
+                    Console.ResetColor();
+                Console.Write("  ");
+                Console.BackgroundColor = ConsoleColor.Blue;
+                Console.Write("  ");
             }
+            Console.WriteLine();
+            // Print a blue border row
+            for (int k = 0; k < field.GetLength(1) * 4 + 2; k++)
+            {
+                Console.Write(" ");
+            }
+            Console.WriteLine();
+            Console.ResetColor();
         }
+        for (int i = 1; i <= field.GetLength(1) * 4; i++)
+        {
+            if (i % 4 == 0)
+                Console.Write(i / 4);
+            else 
+                Console.Write(" ");
+            
+        }
+        Console.WriteLine();
     }
 
     /// <summary>
@@ -54,10 +123,30 @@ public class Program
     /// <returns>
     ///    <c>true</c> if the add of disc is possible; otherwise, <c>false</c>.
     /// </returns>
-    /*private static bool AddPlayerDisc(int[,] field, int playerNr, int addOnColumn)
+    private static bool AddPlayerDisc(int[,] field, int playerNr, int addOnColumn)
     {
-        // Your code here!  
-    }*/
+        // Validate input
+        if (addOnColumn < 1 || addOnColumn > 7)
+            return false;
+        // Find last free square in column and place the disk
+        for (int i = 0; i < field.GetLength(0); i++)
+        {
+            if (field[i, addOnColumn - 1] != 0)
+            {
+                //If column is full return false
+                if (i == 0)
+                    return false;
+                field[i - 1, addOnColumn - 1] = playerNr + 1;
+                return true;
+            }
+            else if (i == field.GetLength(0) - 1)
+            {
+                field[i, addOnColumn - 1] = playerNr + 1;
+                return true;
+            }
+        }
+        return false;
+    }
 
     /// <summary>
     /// Determines if the game end is reached.
@@ -77,8 +166,20 @@ public class Program
     /// <returns>
     ///   <c>true</c> if the game has ended; otherwise, <c>false</c>.
     /// </returns>
-    private static bool IsGameEnd(int[,] field/*, out int winnerPlayer*/)
+    private static bool IsGameEnd(int[,] field, out int winnerPlayer)
     {
-        return false;
+        for (int i = 0; i < field.GetLength(0); i++)
+        {
+            for (int j = 0; j < field.GetLength(1); j++)
+            {
+                if (field[i, j] == 0)
+                {
+                    winnerPlayer = 0;
+                    return false;
+                }
+            }
+        }
+        winnerPlayer = -1;
+        return true;
     }
 }
