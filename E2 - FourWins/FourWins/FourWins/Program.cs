@@ -44,7 +44,7 @@ public class Program
                 Console.ResetColor();
                 Console.Write("Please choose a column: ");
                 string? input = Console.ReadLine();
-                while (input == null){
+                while (input == ""){
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Invalid input");
                     Console.ResetColor();
@@ -112,13 +112,14 @@ public class Program
             Console.WriteLine();
             Console.ResetColor();
         }
-        for (int i = 1; i <= field.GetLength(1) * 4; i++)
+        for (int i = 1; i <= field.GetLength(1); i++)
         {
-            if (i % 4 == 0)
-                Console.Write(i / 4);
-            else 
-                Console.Write(" ");
-            
+            if (i < 10)
+                Console.Write("   ");
+            else
+                Console.Write("  ");
+            Console.Write(i);
+
         }
         Console.WriteLine();
     }
@@ -139,7 +140,7 @@ public class Program
     private static bool AddPlayerDisc(int[,] field, int playerNr, int addOnColumn)
     {
         // Validate input
-        if (addOnColumn < 1 || addOnColumn > 7)
+        if (addOnColumn < 1 || addOnColumn > field.GetLength(1))
             return false;
         // Find last free square in column and place the disk
         for (int i = 0; i < field.GetLength(0); i++)
@@ -184,6 +185,7 @@ public class Program
         winnerPlayer = -1;
         for (int i = 0; i < field.GetLength(0); i++)
         {
+            // Check for a draw (no field is 0)
             for (int j = 0; j < field.GetLength(1); j++)
             {
                 if (field[i, j] == 0)
@@ -194,14 +196,34 @@ public class Program
         }
         if (winnerPlayer == -1)
             return true;
-        for (int i = 0; i < field.GetLength(0) - 3; i++)
+        for (int i = 0; i < field.GetLength(0); i++)
         {
-            for (int j = 0; j < field.GetLength(1); j++)
+            for (int j = 0; j < field.GetLength(1) - 3; j++)
             {
-                if (field[i, j] == field[i + 1, j] && field[i, j] == field[i + 2, j] && field[i, j] == field[i + 3, j])
+                if (field[i, j] == 0) // Skip field if no player placed a disk in it
+                    continue;
+                if (field[i, j] == field[i, j + 1] && field[i, j] == field[i, j + 2] && field[i, j] == field[i, j + 3]) // Check columns
+                {
+
+                    winnerPlayer = field[i, j];
+                    return true;
+                }
+                else if (i > 2 && (field[i, j] == field[i - 1, j + 1] && field[i, j] == field[i - 2, j + 2] && field[i, j] == field[i - 3, j + 3]))
                 {
                     winnerPlayer = field[i, j];
                     return true;
+                }
+                else if (i < field.GetLength(0) - 3)
+                {
+                    if (
+                        (field[i, j] == field[i + 1, j] && field[i, j] == field[i + 2, j] && field[i, j] == field[i + 3, j]) || // Check rows
+                        (field[i, j] == field[i + 1, j + 1] && field[i, j] == field[i + 2, j + 2] && field[i, j] == field[i + 3, j + 3])
+                         // Check columns
+                        )
+                    {
+                        winnerPlayer = field[i, j];
+                        return true;
+                    }
                 }
             }
         }
