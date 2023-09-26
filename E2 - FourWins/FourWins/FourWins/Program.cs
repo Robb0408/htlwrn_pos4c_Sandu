@@ -1,4 +1,6 @@
-﻿namespace FourWins;
+﻿using System.Numerics;
+
+namespace FourWins;
 
 public class Program
 {
@@ -7,7 +9,7 @@ public class Program
         int[,] board;
         int width, height, column, winnerPlayer;
         bool player = false; // false: Player 1 (red), true: Player 2 (yellow)
-        if (args.Length > 0)
+        if (args.Length == 1)
         {
             string[] sizeArr = args[0].Split("x");
             if (int.TryParse(sizeArr[0], out int x))
@@ -44,7 +46,7 @@ public class Program
                 Console.ResetColor();
                 Console.Write("Please choose a column: ");
                 string? input = Console.ReadLine();
-                while (input == ""){
+                while (input == "" || !int.TryParse(input, out int number)) {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Invalid input");
                     Console.ResetColor();
@@ -79,9 +81,9 @@ public class Program
         Console.Clear();
         // Print first row of blue background
         Console.BackgroundColor = ConsoleColor.Blue;
-        for (int i = 0; i < field.GetLength(1) * 4 + 2; i++)
+        for (int i = 0; i < field.GetLength(1) * 2 + 1; i++)
         {
-            Console.Write(" ");
+            Console.Write("  ");
         }
         Console.WriteLine();
         // Print board elements shown as square fields surrounded by blue borders
@@ -105,12 +107,12 @@ public class Program
             }
             Console.WriteLine();
             // Print a blue border row
-            for (int k = 0; k < field.GetLength(1) * 4 + 2; k++)
+            for (int k = 0; k < field.GetLength(1) * 2 + 1; k++)
             {
-                Console.Write(" ");
+                Console.Write("  ");
             }
-            Console.WriteLine();
             Console.ResetColor();
+            Console.WriteLine();
         }
         for (int i = 1; i <= field.GetLength(1); i++)
         {
@@ -183,9 +185,10 @@ public class Program
     private static bool IsGameEnd(int[,] field, out int winnerPlayer)
     {
         winnerPlayer = -1;
+        // Check for a draw (no field is 0)
         for (int i = 0; i < field.GetLength(0); i++)
         {
-            // Check for a draw (no field is 0)
+            
             for (int j = 0; j < field.GetLength(1); j++)
             {
                 if (field[i, j] == 0)
@@ -194,39 +197,40 @@ public class Program
                 }
             }
         }
-        if (winnerPlayer == -1)
-            return true;
-        for (int i = 0; i < field.GetLength(0); i++)
+        for (int i = field.GetLength(0) - 1; i >= 0; i--)
         {
             for (int j = 0; j < field.GetLength(1) - 3; j++)
             {
-                if (field[i, j] == 0) // Skip field if no player placed a disk in it
+                // Skip field if no player placed a disk in it
+                if (field[i, j] == 0)
                     continue;
-                if (field[i, j] == field[i, j + 1] && field[i, j] == field[i, j + 2] && field[i, j] == field[i, j + 3]) // Check columns
-                {
-
-                    winnerPlayer = field[i, j];
-                    return true;
-                }
-                else if (i > 2 && (field[i, j] == field[i - 1, j + 1] && field[i, j] == field[i - 2, j + 2] && field[i, j] == field[i - 3, j + 3]))
+                // Check horizontal
+                else if (field[i, j] == field[i, j + 1] && field[i, j] == field[i, j + 2] && field[i, j] == field[i, j + 3])
                 {
                     winnerPlayer = field[i, j];
                     return true;
                 }
-                else if (i < field.GetLength(0) - 3)
+                else if (i > 3 &&
+                    // Check diagonal (bottom left - top right)
+                    (field[i, j] == field[i - 1, j + 1] && field[i, j] == field[i - 2, j + 2] && field[i, j] == field[i - 3, j + 3]) ||
+                    // Check columnwise
+                    (field[i, j] == field[i - 1, j] && field[i, j] == field[i - 2, j] && field[i, j] == field[i - 3, j]))
                 {
-                    if (
-                        (field[i, j] == field[i + 1, j] && field[i, j] == field[i + 2, j] && field[i, j] == field[i + 3, j]) || // Check rows
-                        (field[i, j] == field[i + 1, j + 1] && field[i, j] == field[i + 2, j + 2] && field[i, j] == field[i + 3, j + 3])
-                         // Check columns
-                        )
-                    {
-                        winnerPlayer = field[i, j];
-                        return true;
-                    }
+                    winnerPlayer = field[i, j];
+                    return true;
+                }
+                else if (j > 3 &&
+                    // Check diagonal (top left - bottom right)
+                    (field[i, j] == field[i - 1, j - 1] && field[i, j] == field[i - 2, j - 2] && field[i, j] == field[i - 3, j - 3]))
+                {
+                    winnerPlayer = field[i, j];
+                    return true;
                 }
             }
         }
-        return false;
+        if (winnerPlayer == -1 || winnerPlayer == 1 || winnerPlayer == 2)
+            return true;
+        else
+            return false;
     }
 }
