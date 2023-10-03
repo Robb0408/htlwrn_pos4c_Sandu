@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "AsciiArtCombiner": {
+      "commandName": "Project",
+      "commandLineArgs": "hg1.txt"
+    }
+  }
+}
