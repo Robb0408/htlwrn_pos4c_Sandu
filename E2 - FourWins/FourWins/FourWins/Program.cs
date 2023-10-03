@@ -9,7 +9,7 @@ public class Program
         int[,] board;
         int width, height, column, winnerPlayer;
         bool player = false; // false: Player 1 (red), true: Player 2 (yellow)
-        if (args.Length == 1)
+        if (args.Length > 0 && args[0].Contains("x"))
         {
             string[] sizeArr = args[0].Split("x");
             if (int.TryParse(sizeArr[0], out int x))
@@ -44,16 +44,20 @@ public class Program
                     Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"Player Nr. {((player) ? 2 : 1)}");
                 Console.ResetColor();
-                Console.Write("Please choose a column: ");
+                Console.Write($"Please choose a column (1-{board.GetLength(1)}): ");
                 string? input = Console.ReadLine();
                 while (input == "" || !int.TryParse(input, out int number)) {
                     Console.ForegroundColor = ConsoleColor.Red;
                     Console.WriteLine("Invalid input");
                     Console.ResetColor();
-                    Console.Write("Please choose a column: ");
+                    Console.Write($"Please choose a column (1-{board.GetLength(1)}): ");
                     input = Console.ReadLine();
                 }
                 column = Convert.ToInt32(input);
+                if (column < 1 || column > board.GetLength(1))
+                {
+                    Console.WriteLine("Column number does not exist");
+                }
             }
             while (!AddPlayerDisc(board, (player) ? 1 : 0, column));
             player = !player;
@@ -208,29 +212,50 @@ public class Program
                 else if (field[i, j] == field[i, j + 1] && field[i, j] == field[i, j + 2] && field[i, j] == field[i, j + 3])
                 {
                     winnerPlayer = field[i, j];
-                    return true;
+
                 }
-                else if (i > 3 &&
-                    // Check diagonal (bottom left - top right)
+                else if (i >= 3)
+                {
+                    if (
+                    // Check diagonal (bottom left - top right) /
                     (field[i, j] == field[i - 1, j + 1] && field[i, j] == field[i - 2, j + 2] && field[i, j] == field[i - 3, j + 3]) ||
                     // Check columnwise
                     (field[i, j] == field[i - 1, j] && field[i, j] == field[i - 2, j] && field[i, j] == field[i - 3, j]))
-                {
-                    winnerPlayer = field[i, j];
-                    return true;
+                    {
+                        winnerPlayer = field[i, j];
+                    }
+                    else if (j >= 3)
+                    {
+                        if (
+                        // Check diagonal (top left - bottom right) \
+                        (field[i, j] == field[i - 1, j - 1] && field[i, j] == field[i - 2, j - 2] && field[i, j] == field[i - 3, j - 3]))
+                        {
+                            winnerPlayer = field[i, j];
+                        }
+                    }
                 }
-                else if (j > 3 &&
-                    // Check diagonal (top left - bottom right)
-                    (field[i, j] == field[i - 1, j - 1] && field[i, j] == field[i - 2, j - 2] && field[i, j] == field[i - 3, j - 3]))
+                    /*else if (
+                        (field[i, j] == field[i, j + 1] && field[i, j] == field[i, j + 2] && field[i, j] == field[i, j + 3]) ||
+                        ((i >= 3) && (field[i, j] == field[i - 1, j] && field[i, j] == field[i - 2, j] && field[i, j] == field[i - 3, j]) ||
+                        (field[i, j] == field[i - 1, j + 1] && field[i, j] == field[i - 2, j + 2] && field[i, j] == field[i - 3, j + 3])) ||
+                        ((i < field.GetLength(0) - 3) && (field[i, j] == field[i + 1, j + 1] && field[i, j] == field[i + 2, j + 2] && field[i, j] == field[i + 3, j + 3]))
+                        )
+                    {
+                        winnerPlayer = field[i, j];
+                    }
+                } catch (Exception e)
                 {
-                    winnerPlayer = field[i, j];
-                    return true;
-                }
+                    Console.WriteLine($"{i} and {j}");
+                    Environment.Exit(1);
+                }*/
             }
         }
-        if (winnerPlayer == -1 || winnerPlayer == 1 || winnerPlayer == 2)
-            return true;
-        else
-            return false;
+        switch (winnerPlayer)
+        {
+            case 0:
+            case 1: 
+            case 2: return true; 
+            default: return false;
+        }
     }
 }

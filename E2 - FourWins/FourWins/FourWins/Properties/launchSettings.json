@@ -1,8 +1,7 @@
 {
   "profiles": {
     "FourWins": {
-      "commandName": "Project",
-      "commandLineArgs": "20x10"
+      "commandName": "Project"
     },
     "WSL": {
       "commandName": "WSL2",
