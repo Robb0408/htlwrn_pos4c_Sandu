@@ -2,7 +2,7 @@
 
 namespace FileCombiner
 {
-    public class FileCombiner
+    public class AsciiCombiner
     {
 
     }

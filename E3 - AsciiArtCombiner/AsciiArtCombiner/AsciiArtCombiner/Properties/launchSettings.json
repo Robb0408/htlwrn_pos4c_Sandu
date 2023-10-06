@@ -2,7 +2,7 @@
   "profiles": {
     "AsciiArtCombiner": {
       "commandName": "Project",
-      "commandLineArgs": "hg1.txt"
+      "commandLineArgs": "hg1.txt hg2.txt hg3.txt"
     }
   }
 }
