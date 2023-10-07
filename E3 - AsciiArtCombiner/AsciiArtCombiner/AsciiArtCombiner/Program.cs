@@ -1,5 +1,7 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using FileCombiner;
+
 List<string> allFileContent; // Array of a list to store the content of every file
 
 if (args.Length < 2)
@@ -10,10 +12,7 @@ try
 {
     // Input file content and store it into a list array
     allFileContent = new List<string>();
-    foreach (var file in args)
-    {
-        allFileContent.Add(File.ReadAllText(file));
-    }
+    ReadFiles(allFileContent, args);
 }
 catch (FileNotFoundException ex)
 {
@@ -23,22 +22,33 @@ catch (IOException ex)
 {
     throw ex;
 }
-if (!IsSameSize())
+if (!IsSameSize(allFileContent))
 {
     throw new ArgumentException("One or more files are not the same size. All files have to be the same size.");
 }
+string combinedContent = AsciiCombiner.Combine(allFileContent);
+Console.WriteLine(combinedContent);
 
 
-
-
-bool IsSameSize()
+static void ReadFiles(List<string> fileContent, string[] fileNames)
 {
-    string[] line1 = allFileContent[0].Split("\n");
+    foreach (var file in fileNames)
+    {
+        fileContent.Add(File.ReadAllText(file));
+    }
+}
+
+/// <summary>
+/// Checks if the size of every file is the same
+/// </summary>
+static bool IsSameSize(List<string> fileContent)
+{
+    string[] line1 = fileContent[0].Split(Environment.NewLine);
     int length1 = line1[0].Length;
     int rows1 = line1.Length;
-    for (int i = 1; i < allFileContent.Count; i++) 
+    for (int i = 1; i < fileContent.Count; i++) 
     {
-        string[] line = allFileContent[i].Split("\n");
+        string[] line = fileContent[i].Split(Environment.NewLine);
         int length = line[2].Length;
         int rows = line.Length;
         if (length1 != length || rows1 != rows)
