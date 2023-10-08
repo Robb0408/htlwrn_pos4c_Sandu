@@ -3,11 +3,17 @@
 using FileCombiner;
 
 List<string> allFileContent; // Array of a list to store the content of every file
-
-if (args.Length < 2)
+if (args.Length == 0 || ((args.Contains("-v") ^ args.Contains("--variable")) && args.Length == 1))
 {
-    throw new ArgumentException($"Program takes 2 files or more. Only {args.Length} provided.");
+    DisplayError("Program needs 2 files or more. No files provided.");
+    return;
 }
+else if (args.Length < 2 || ((args.Contains("-v") ^ args.Contains("--variable")) && args.Length < 3))
+{
+    DisplayError($"Program needs 2 files or more. Only {args.Length} provided.");
+    return;
+}
+
 try
 {
     // Input file content and store it into a list array
@@ -16,45 +22,76 @@ try
 }
 catch (FileNotFoundException ex)
 {
-    throw ex;
+    DisplayError($"File \"{Path.GetFileName(ex.FileName)}\" was not found.");
+    return;
 }
-catch (IOException ex)
+catch (IOException)
 {
-    throw ex;
+    DisplayError($"An error occured while trying to read.");
+    return;
 }
-if (!IsSameSize(allFileContent))
+
+if (!IsSameSize(allFileContent) && !(args.Contains("-v") ^ args.Contains("--variable")))
 {
-    throw new ArgumentException("One or more files are not the same size. All files have to be the same size.");
+    DisplayError("One or more files do not have the same dimensions. All files have to be the same size " +
+        "(except when using \"-v\" or \"--variable\".");
+    return;
 }
-string combinedContent = AsciiCombiner.Combine(allFileContent);
-Console.WriteLine(combinedContent);
+
+Console.WriteLine(AsciiCombiner.Combine(allFileContent));
 
 
+/// <summary>
+/// Reads the content of every provided file and stores the content in a list as strings.
+/// </summary>
 static void ReadFiles(List<string> fileContent, string[] fileNames)
 {
     foreach (var file in fileNames)
     {
+        if (file == "-v" || file == "--variable")
+        {
+            continue;
+        }
         fileContent.Add(File.ReadAllText(file));
     }
 }
 
 /// <summary>
-/// Checks if the size of every file is the same
+/// Checks if the size of every file is the same.
 /// </summary>
+/// <param name="fileContent">List containing the content of every file.</param>
 static bool IsSameSize(List<string> fileContent)
 {
-    string[] line1 = fileContent[0].Split(Environment.NewLine);
-    int length1 = line1[0].Length;
-    int rows1 = line1.Length;
-    for (int i = 1; i < fileContent.Count; i++) 
+    // Takes height from first file to compare
+    string[] lines = fileContent[0].Split(Environment.NewLine);
+    int height = lines.Length;
+    int length = lines[0].Length;
+    // Comparing dimensions with every file
+    for (int i = 0; i < fileContent.Count; i++) 
     {
         string[] line = fileContent[i].Split(Environment.NewLine);
-        int length = line[2].Length;
-        int rows = line.Length;
-        if (length1 != length || rows1 != rows)
+        if (line.Length != height)
         {
             return false;
         }
+        for (int j = 0; j < line.Length; j++)
+        {
+            if (line[j].Length != length)
+            {
+                return false;
+            }
+        }
     }
     return true;
+}
+
+/// <summary>
+/// Displays a error message in the console.
+/// </summary>
+/// <param name="message">Error message that should be displayed.</param>
+static void DisplayError(string message)
+{
+    Console.ForegroundColor = ConsoleColor.Red;
+    Console.WriteLine(message);
+    Console.ResetColor();
 }
