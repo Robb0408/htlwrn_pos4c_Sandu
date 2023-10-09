@@ -3,12 +3,12 @@
 using FileCombiner;
 
 List<string> allFileContent; // Array of a list to store the content of every file
-if (args.Length == 0 || ((args.Contains("-v") ^ args.Contains("--variable")) && args.Length == 1))
+if (args.Length == 0 || ((args.Contains("--v") ^ args.Contains("--variable")) && args.Length == 1))
 {
     DisplayError("Program needs 2 files or more. No files provided.");
     return;
 }
-else if (args.Length < 2 || ((args.Contains("-v") ^ args.Contains("--variable")) && args.Length < 3))
+else if (args.Length < 2 || ((args.Contains("--v") ^ args.Contains("--variable")) && args.Length < 3))
 {
     DisplayError($"Program needs 2 files or more. Only {args.Length} provided.");
     return;
@@ -31,7 +31,7 @@ catch (IOException)
     return;
 }
 
-if (!IsSameSize(allFileContent) && !(args.Contains("-v") ^ args.Contains("--variable")))
+if (!IsSameSize(allFileContent) && !(args.Contains("--v") ^ args.Contains("--variable")))
 {
     DisplayError("One or more files do not have the same dimensions. All files have to be the same size " +
         "(except when using \"-v\" or \"--variable\".");
@@ -48,7 +48,7 @@ static void ReadFiles(List<string> fileContent, string[] fileNames)
 {
     foreach (var file in fileNames)
     {
-        if (file == "-v" || file == "--variable")
+        if (file == "--v" || file == "--variable")
         {
             continue;
         }
