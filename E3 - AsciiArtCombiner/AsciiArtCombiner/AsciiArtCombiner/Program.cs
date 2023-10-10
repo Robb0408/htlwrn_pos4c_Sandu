@@ -16,7 +16,7 @@ else if (args.Length < 2 || ((args.Contains("--v") ^ args.Contains("--variable")
 
 try
 {
-    // Input file content and store it into a list array
+    // Read input
     allFileContent = new List<string>();
     ReadFiles(allFileContent, args);
 }
