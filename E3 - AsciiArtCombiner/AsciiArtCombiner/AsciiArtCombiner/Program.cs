@@ -3,6 +3,7 @@
 using FileCombiner;
 
 List<string> allFileContent; // A list to store the content of every file as string
+
 if (args.Length == 0 || ((args.Contains("--v") ^ args.Contains("--variable")) && args.Length == 1))
 {
     DisplayError("Program needs 2 files or more. No files provided.");
@@ -33,7 +34,7 @@ catch (IOException)
 
 if (!IsSameSize(allFileContent) && !(args.Contains("--v") ^ args.Contains("--variable")))
 {
-    DisplayError("One or more files do not have the same dimensions. All files have to be the same size " +
+    DisplayError("One or more files do not have the same size. All files have to be the same size " +
         "(except when using \"-v\" or \"--variable\".");
     return;
 }
@@ -44,6 +45,8 @@ Console.WriteLine(AsciiCombiner.Combine(allFileContent));
 /// <summary>
 /// Reads the content of every provided file and stores the content in a list as strings.
 /// </summary>
+/// <param name="fileContent">Where the content of every file is stored in.</param>
+/// <param name="fileNames">Filenames to read from.</param>
 static void ReadFiles(List<string> fileContent, string[] fileNames)
 {
     foreach (var file in fileNames)
@@ -60,13 +63,18 @@ static void ReadFiles(List<string> fileContent, string[] fileNames)
 /// Checks if the size of every file is the same.
 /// </summary>
 /// <param name="fileContent">List containing the content of every file.</param>
+/// <returns>
+/// True: Every file has the same size.
+/// False: Not every file has the same size.
+/// </returns>
 static bool IsSameSize(List<string> fileContent)
 {
-    // Takes height from first file to compare
+    // Takes size from first file as base to compare
     string[] lines = fileContent[0].Split(Environment.NewLine);
     int height = lines.Length;
     int length = lines[0].Length;
-    // Comparing dimensions with every file
+
+    // Comparing size with every file
     for (int i = 0; i < fileContent.Count; i++) 
     {
         string[] line = fileContent[i].Split(Environment.NewLine);
@@ -86,7 +94,7 @@ static bool IsSameSize(List<string> fileContent)
 }
 
 /// <summary>
-/// Displays a error message in the console.
+/// Displays a error message in red color in the console.
 /// </summary>
 /// <param name="message">Error message that should be displayed.</param>
 static void DisplayError(string message)
