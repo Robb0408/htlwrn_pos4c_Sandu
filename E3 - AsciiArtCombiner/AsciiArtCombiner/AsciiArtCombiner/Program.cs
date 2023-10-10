@@ -35,7 +35,7 @@ catch (IOException)
 if (!IsSameSize(allFileContent) && !(args.Contains("--v") ^ args.Contains("--variable")))
 {
     DisplayError("One or more files do not have the same size. All files have to be the same size " +
-        "(except when using \"-v\" or \"--variable\".");
+        "(except when using \"-v\" or \"--variable\".)");
     return;
 }
 

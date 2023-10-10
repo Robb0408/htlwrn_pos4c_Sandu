@@ -1,8 +1,7 @@
 {
   "profiles": {
     "AsciiArtCombiner": {
-      "commandName": "Project",
-      "commandLineArgs": "smiley1.txt smiley2.txt smiley3.txt"
+      "commandName": "Project"
     }
   }
 }
