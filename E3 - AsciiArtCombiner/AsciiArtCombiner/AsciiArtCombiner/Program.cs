@@ -2,7 +2,7 @@
 
 using FileCombiner;
 
-List<string> allFileContent; // Array of a list to store the content of every file
+List<string> allFileContent; // A list to store the content of every file as string
 if (args.Length == 0 || ((args.Contains("--v") ^ args.Contains("--variable")) && args.Length == 1))
 {
     DisplayError("Program needs 2 files or more. No files provided.");
@@ -26,7 +26,7 @@ catch (FileNotFoundException ex)
     return;
 }
 catch (IOException)
-{
+{   
     DisplayError($"An error occured while trying to read.");
     return;
 }

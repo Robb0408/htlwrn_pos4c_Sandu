@@ -20,7 +20,23 @@ namespace AsciiCombinerTest
             "          " +
             "          "
             };
-            Assert.Equal("  *    *  " + "    /\\    " + "\\        /" + " \\______/ ", AsciiCombiner.Combine(lines));
+
+            Assert.Equal(
+                "  *    *  " + 
+                "    /\\    " + 
+                "\\        /" + 
+                " \\______/ ", 
+                AsciiCombiner.Combine(lines)
+                );
+        }
+
+        [Fact]
+        public void Combine_ShouldCombineFiles()
+        {
+            List<string> contents = new()
+            {
+                // ne doch war richtig nvm
+            };
         }
     }
 }
