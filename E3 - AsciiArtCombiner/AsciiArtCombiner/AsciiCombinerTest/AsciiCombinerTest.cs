@@ -35,9 +35,9 @@ namespace AsciiCombinerTest
             List<string> contents = new()
             {
                 "H ll  W rld!",
-                " e  o  o"
+                " e  o  o    !"
             };
-            Assert.Equal("Hello World!", AsciiCombiner.Combine(contents));
+            Assert.Equal("Hello World!!", AsciiCombiner.Combine(contents));
         }
     }
 }

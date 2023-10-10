@@ -11,21 +11,26 @@ namespace FileCombiner
         /// <returns>Combined string.</returns>
         public static string Combine(List<string> lines)
         {
-            // Base for overlapping
-            char[] charsGround = lines[0].ToCharArray();
+            
+            char[] charsGround = lines[0].ToCharArray(); // Base for overlapping
+            List<char> remaining = new List<char>(); // List for remaining chars if length differs from base
 
             for (int i = 1; i < lines.Count; i++)
             {
                 char[] chars = lines[i].ToCharArray();
-                for (int j = 0; j < charsGround.Length; j++)
+                for (int j = 0; j < chars.Length; j++)
                 {
-                    if (charsGround[j] == ' ')
+                    if (j < charsGround.Length && charsGround[j] == ' ')
                     {
                         charsGround[j] = chars[j];
                     }
+                    else if (j >= charsGround.Length)
+                    {
+                        remaining.Add(chars[j]);
+                    }
                 }
             }
-            return new string(charsGround);
+            return new string(charsGround) + new string(remaining.ToArray());
         }
     }
 }
