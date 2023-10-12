@@ -15,6 +15,7 @@ namespace AsciiCombinerTest
                 "      \r\n  ::  \r\n      \r\n  ..  \r\n      "
             };
             string result = "+====+\r\n|(::)|\r\n| )( |\r\n|(..)|\r\n+====+";
+
             Assert.Equal(result, AsciiCombiner.Combine(contents));
         }
 
