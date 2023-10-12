@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "ConsoleChart": {
+      "commandName": "Project",
+      "commandLineArgs": "data.txt a b"
+    }
+  }
+}
