@@ -42,6 +42,7 @@ int groupByColIndex = Array.IndexOf(headerCols, args[1]);
 int numericColIndex = Array.IndexOf(headerCols, args[2]);
 
 lines.Remove(lines[0]); // Remove header line for easier handling
+int maxCount = (args.Length == 4) ? int.Parse(args[3]) : int.MaxValue;
 
 var result = ReadData(lines, groupByColIndex, numericColIndex)
     .GroupBy(n => n.Item1)
@@ -53,18 +54,18 @@ var result = ReadData(lines, groupByColIndex, numericColIndex)
             NumericColSum = group.Sum(n => n.Item2)
         };
     })
-    .OrderByDescending(n => n.NumericColSum);
+    .OrderByDescending(n => n.NumericColSum)
+    .Take(maxCount);
 
-int maxCount = (args.Length == 4 ) ? int.Parse(args[3]) : result.Count();
-int maxLength = result.Take(maxCount).Max(n => n.GroupByKey.Length);
+int maxLength = result.Max(n => n.GroupByKey.Length);
 int baseAmount = result.First().NumericColSum;
 int rate;
 
-for (int i = 0; i < maxCount; i++)
+foreach (var item in result)
 {
-    Console.Write(result.ElementAt(i).GroupByKey.PadLeft(maxLength) + " | ");
+    Console.Write(item.GroupByKey.PadLeft(maxLength) + " | ");
     Console.BackgroundColor = ConsoleColor.Red;
-    rate = result.ElementAt(i).NumericColSum * 100 / baseAmount;
+    rate = item.NumericColSum * 100 / baseAmount;
     for (int j = 1; j <= rate; j++)
     {
         Console.Write(" ");
