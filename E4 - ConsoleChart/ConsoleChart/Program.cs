@@ -1,6 +1,4 @@
-﻿using ConsoleChart;
-
-// Check argument count
+﻿// Check argument count
 if (args.Length < 3 || args.Length > 4)
 {
     DisplayError("Not enough or too many arguments provided, expected 3.");
@@ -45,28 +43,29 @@ int numericColIndex = Array.IndexOf(headerCols, args[2]);
 
 lines.Remove(lines[0]); // Remove header line for easier handling
 
-List<Data> dataList = ReadData(lines, groupByColIndex, numericColIndex).ToList();
-var result = dataList
-    .GroupBy(n => n.GroupByCol)
+var result = ReadData(lines, groupByColIndex, numericColIndex)
+    .GroupBy(n => n.Item1)
     .Select(group =>
     {
         return new
         {
             GroupByKey = group.Key,
-            NumericColSum = group.Sum(n => int.Parse(n.NumericCol))
+            NumericColSum = group.Sum(n => n.Item2)
         };
     })
     .OrderByDescending(n => n.NumericColSum);
 
-int maxCount = (args.Length == 4) ? int.Parse(args[3]) : result.Count();
+int maxCount = (args.Length == 4 ) ? int.Parse(args[3]) : result.Count();
 int maxLength = result.Take(maxCount).Max(n => n.GroupByKey.Length);
 int baseAmount = result.First().NumericColSum;
+int rate;
 
 for (int i = 0; i < maxCount; i++)
 {
     Console.Write(result.ElementAt(i).GroupByKey.PadLeft(maxLength) + " | ");
     Console.BackgroundColor = ConsoleColor.Red;
-    for (int j = 1; j <= result.ElementAt(i).NumericColSum * 100 / baseAmount; j++)
+    rate = result.ElementAt(i).NumericColSum * 100 / baseAmount;
+    for (int j = 1; j <= rate; j++)
     {
         Console.Write(" ");
     }
@@ -77,15 +76,15 @@ for (int i = 0; i < maxCount; i++)
 /// <summary>
 /// Reads data from two columns.
 /// </summary>
-static IEnumerable<Data> ReadData(List<string> source, int index1, int index2)
+static IEnumerable<(string, int)> ReadData(List<string> source, int index1, int index2)
 {
     foreach (string line in source)
     {
-        yield return new Data()
-        {
-            GroupByCol = line.Split("\t")[index1],
-            NumericCol = line.Split("\t")[index2]
-        };
+        string[] splitLine = line.Split("\t");
+        yield return (
+            splitLine[index1],
+            int.Parse(splitLine[index2])
+        );
     }
 }
 

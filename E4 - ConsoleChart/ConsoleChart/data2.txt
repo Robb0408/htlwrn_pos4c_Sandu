@@ -1,0 +1,39 @@
+product	category	price	quantity_sold
+Laptop	Electronics	899	123
+Smartphone	Electronics	599	265
+Refrigerator	Appliances	999	87
+Washing Machine	Appliances	499	132
+Sneakers	Footwear	79	405
+T-shirt	Clothing	25	840
+Desk	Furniture	199	68
+Headphones	Electronics	129	189
+Microwave	Appliances	149	122
+Jeans	Clothing	49	510
+Toaster	Appliances	39	195
+Table	Furniture	299	75
+Keyboard	Electronics	49	321
+Oven	Appliances	199	88
+Boots	Footwear	129	307
+Blender	Appliances	69	275
+Dress	Clothing	59	190
+Chair	Furniture	89	195
+Monitor	Electronics	199	144
+Blouse	Clothing	29	330
+Air Conditioner	Appliances	349	98
+Handbag	Accessories	39	420
+Television	Electronics	499	110
+Shoes	Footwear	69	590
+Sofa	Furniture	399	45
+Printer	Electronics	89	235
+Iron	Appliances	29	365
+Jacket	Clothing	79	260
+Bookshelf	Furniture	129	68
+Camera	Electronics	299	105
+Fridge	Appliances	799	72
+Pants	Clothing	39	490
+Coffee Maker	Appliances	59	215
+Dining Table	Furniture	249	55
+Mouse	Electronics	19	610
+Vacuum Cleaner	Appliances	149	94
+Hoodie	Clothing	49	335
+Bed	Furniture	399	60
