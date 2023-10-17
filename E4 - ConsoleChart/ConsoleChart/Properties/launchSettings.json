@@ -1,8 +1,7 @@
 {
   "profiles": {
     "ConsoleChart": {
-      "commandName": "Project",
-      "commandLineArgs": "data.txt animal attacks 5"
+      "commandName": "Project"
     }
   }
 }
