@@ -1,0 +1,38 @@
+﻿<Properties StartupConfiguration="{43C19952-1C55-4EF1-B1C7-9E24B63C043B}|Default">
+  <MonoDevelop.Ide.ItemProperties.LinqQuiz.Test PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Quiz.cs">
+    <Files>
+      <File FileName="Quiz.cs" Line="89" Column="24" />
+      <File FileName="../LinqQuiz.Test/FamilyStatistic.cs" Line="76" Column="34" />
+      <File FileName="IFamily.cs" Line="7" Column="2" />
+      <File FileName="IPerson.cs" Line="8" Column="2" />
+      <File FileName="FamilySummary.cs" Line="8" Column="2" />
+      <File FileName="../LinqQuiz.Test/EvenNumbers.cs" Line="1" Column="1" />
+      <File FileName="../LinqQuiz.Test/TextStatistic.cs" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="LinqQuiz.Library">
+            <Node name="LinqQuiz.Library">
+              <Node name="Quiz.cs" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.UnitTesting.TestPad">
+        <State name="__root__">
+          <Node name="LinqQuiz.Library">
+            <Node name="LinqQuiz.Test" selected="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+</Properties>
