@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
+using System.Numerics;
 
 namespace LinqQuiz.Library;
 
@@ -16,7 +18,9 @@ public static class Quiz
     /// </exception>
     public static int[] GetEvenNumbers(int exclusiveUpperLimit)
     {
-        throw new NotImplementedException();
+        return Enumerable.Range(1, (exclusiveUpperLimit >= 1) ? exclusiveUpperLimit - 1 : throw new ArgumentOutOfRangeException($"{exclusiveUpperLimit} is lower than 1"))
+            .Where(x => int.IsEvenInteger(x))
+            .ToArray();
     }
 
     /// <summary>
@@ -33,9 +37,12 @@ public static class Quiz
     /// </remarks>
     public static int[] GetSquares(int exclusiveUpperLimit)
     {
-        throw new NotImplementedException();
+        return Enumerable.Range(1, (exclusiveUpperLimit >= 1) ? exclusiveUpperLimit - 1 : 1)
+            .Where(x => x % 7 == 0)
+            .Select(x => Convert.ToInt32(Math.Pow(x, 2)))
+            .OrderByDescending(x => x)
+            .ToArray();
     }
-
     /// <summary>
     /// Returns a statistic about families.
     /// </summary>
@@ -52,7 +59,7 @@ public static class Quiz
     /// </remarks>
     public static FamilySummary[] GetFamilyStatistic(IReadOnlyCollection<IFamily> families)
     {
-        throw new NotImplementedException();
+        return new FamilySummary[] { };
     }
 
     /// <summary>

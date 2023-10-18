@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace LinqQuiz.Library;
+﻿namespace LinqQuiz.Library;
 
 public interface IFamily
 {
