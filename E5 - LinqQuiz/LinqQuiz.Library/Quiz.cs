@@ -59,7 +59,12 @@ public static class Quiz
     /// </remarks>
     public static FamilySummary[] GetFamilyStatistic(IReadOnlyCollection<IFamily> families)
     {
-        return new FamilySummary[] { };
+        return families.Select(family => new FamilySummary
+        {
+            FamilyID = family.ID,
+            AverageAge = family.Persons.Any() ? family.Persons.Average(person => person.Age) : 0,
+            NumberOfFamilyMembers = family.Persons.Count
+        }).ToArray();
     }
 
     /// <summary>
@@ -77,6 +82,10 @@ public static class Quiz
     /// </remarks>
     public static (char letter, int numberOfOccurrences)[] GetLetterStatistic(string text)
     {
-        throw new NotImplementedException();
+        return text.Where(char.IsLetter)
+            .Select(char.ToUpper)
+            .GroupBy(c => c)
+            .Select(group => (group.Key, group.Count()))
+            .ToArray();
     }
 }
