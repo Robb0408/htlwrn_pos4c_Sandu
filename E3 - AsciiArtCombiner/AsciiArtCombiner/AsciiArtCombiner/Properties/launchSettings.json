@@ -2,7 +2,11 @@
   "profiles": {
     "AsciiArtCombiner": {
       "commandName": "Project",
+<<<<<<< Updated upstream
       "commandLineArgs": "smiley1.txt smiley3.txt smiley2.txt"
+=======
+      "commandLineArgs": "hg1.txt hg2.txt hg3.txt"
+>>>>>>> Stashed changes
     }
   }
 }
