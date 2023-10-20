@@ -1,7 +1,5 @@
-﻿using System;
-using Xunit;
+﻿using Xunit;
 using LinqQuiz.Library;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text.Json;
 
