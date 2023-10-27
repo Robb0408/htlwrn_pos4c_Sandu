@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "E6 - Website Analytics": {
-      "commandName": "Project",
-      "commandLineArgs": "access-log.txt"
-    }
-  }
-}
