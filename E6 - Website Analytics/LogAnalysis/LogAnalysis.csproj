@@ -24,6 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LogAnalysis.Logic\LogAnalysis.Logic\LogAnalysis.Logic.csproj" />
+    <ProjectReference Include="..\LogAnalysis.Logic\LogAnalysis.Logic.csproj" />
   </ItemGroup>
 </Project>

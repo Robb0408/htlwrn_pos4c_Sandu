@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Globalization;
+using System.Text.Json;
 using LogAnalysis;
 using LogAnalysis.Logic;
 
@@ -27,7 +28,7 @@ try
             return new Data
             {
                 Url = splitData[0],
-                Date = DateTime.Parse(splitData[timeIndex])
+                Date = DateTime.Parse(splitData[timeIndex], new CultureInfo("en-US"))
             };
         }).ToList();
 }

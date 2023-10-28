@@ -5,7 +5,7 @@ VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogAnalysis", "LogAnalysis.csproj", "{C222217C-E1F0-4095-BC00-DD7EFC599FAA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogAnalysis.Logic", "..\LogAnalysis.Logic\LogAnalysis.Logic\LogAnalysis.Logic.csproj", "{51E0DE65-A73C-4423-8D16-14EE9215DE67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogAnalysis.Logic", "..\LogAnalysis.Logic\LogAnalysis.Logic.csproj", "{A2FDF4C4-3AD2-46D5-A93B-384C6053C652}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{C222217C-E1F0-4095-BC00-DD7EFC599FAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C222217C-E1F0-4095-BC00-DD7EFC599FAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C222217C-E1F0-4095-BC00-DD7EFC599FAA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{51E0DE65-A73C-4423-8D16-14EE9215DE67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{51E0DE65-A73C-4423-8D16-14EE9215DE67}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{51E0DE65-A73C-4423-8D16-14EE9215DE67}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{51E0DE65-A73C-4423-8D16-14EE9215DE67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2FDF4C4-3AD2-46D5-A93B-384C6053C652}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2FDF4C4-3AD2-46D5-A93B-384C6053C652}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2FDF4C4-3AD2-46D5-A93B-384C6053C652}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2FDF4C4-3AD2-46D5-A93B-384C6053C652}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
