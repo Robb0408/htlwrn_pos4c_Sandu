@@ -64,7 +64,7 @@ if (args[0] == "monthly")
         Console.WriteLine($"\tTOTAL: {totalDownloads}");
     }
 }
-else
+else if (args[0] == "hourly")
 {
     var stats = LogAnalyzer.AnalyzeHourly(dataList).Where(n => args.Length != 2 || n.Key == args[1]);
 
@@ -76,6 +76,14 @@ else
         {
             Console.WriteLine($"\t{time.Key}: {decimal.Round(decimal.Divide(time.Value * 100, totalDownloads), 2)} %");
         }
+    }
+} else
+{
+    var test = JsonSerializer.Deserialize<List<(string, string, int)>>(File.ReadAllText("photographers.json"));
+
+    foreach (var item in test)
+    {
+        Console.WriteLine($"Picture: {item.Item1}\nTaken by: {item.Item2}\nYear: {item.Item3}");
     }
 }
 
