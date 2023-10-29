@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Text;
 using System.Text.Json;
 using LogAnalysis;
 using LogAnalysis.Logic;
@@ -9,7 +10,7 @@ if (args.Length == 0)
     Console.WriteLine("No arguments given");
     Environment.Exit(4);
 }
-else if (!args.Contains("monthly") && !args.Contains("hourly"))
+else if (!args.Contains("monthly") && !args.Contains("hourly") && !args.Contains("photographers"))
 {
     Console.WriteLine("Invalid argument");
     Environment.Exit(5);
@@ -77,14 +78,30 @@ else if (args[0] == "hourly")
             Console.WriteLine($"\t{time.Key}: {decimal.Round(decimal.Divide(time.Value * 100, totalDownloads), 2)} %");
         }
     }
-} else
+} 
+else
 {
-    var test = JsonSerializer.Deserialize<List<(string, string, int)>>(File.ReadAllText("photographers.json"));
-
-    foreach (var item in test)
+    List<Photo> photos = new();
+    try
     {
-        Console.WriteLine($"Picture: {item.Item1}\nTaken by: {item.Item2}\nYear: {item.Item3}");
+        photos = JsonSerializer.Deserialize<List<Photo>>(File.ReadAllText("photographers.json"))!;
     }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+        Environment.Exit(6);
+    }
+
+    foreach (var item in photos)
+    {
+        dataList.Where(n => n.Url == item.Pic)
+            .ToDictionary(n => item.TakenBy, n => /*continue*/);
+    }
+
+    /*foreach (var photo in photoSummary)
+    {
+        Console.WriteLine(photo.Key + ": " + photo.Value);
+    }*/
 }
 
  ///////////////////////////////////
