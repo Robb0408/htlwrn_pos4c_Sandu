@@ -1,4 +1,6 @@
-﻿namespace LogAnalysis.Logic;
+﻿using System.Text.Json;
+
+namespace LogAnalysis.Logic;
 
 public static class LogAnalyzer
 {
@@ -34,5 +36,26 @@ public static class LogAnalyzer
                     .OrderBy(n => n.Key)
             )
             .OrderBy(n => n.Key);
+    }
+
+    public static List<KeyValuePair<string, int>> GetPhotographerCount(List<Data> dataList)
+    {
+        var photos = JsonSerializer.Deserialize<List<Photo>>(File.ReadAllText("photographers.json"))!;
+        List<KeyValuePair<string, int>> photographerPicCount = new();
+
+        foreach (var item in photos)
+        {
+            var test = dataList
+                .Where(n => n.Url == item.Pic)
+                .GroupBy(n => n.Url)
+                .ToDictionary(
+                    group => item.TakenBy,
+                    group => group.Count()
+                )
+                .First();
+
+            photographerPicCount.Add(test);
+        }
+        return photographerPicCount.OrderByDescending(n => n.Value).ToList();
     }
 }

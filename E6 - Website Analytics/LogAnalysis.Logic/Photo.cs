@@ -5,10 +5,10 @@ namespace LogAnalysis.Logic
 	public class Photo
 	{
 		[JsonPropertyName("pic")]
-		public string Pic { get; set; }
+		public required string Pic { get; set; }
 
 		[JsonPropertyName("takenBy")]
-		public string TakenBy { get; set; }
+		public required string TakenBy { get; set; }
 
 		[JsonPropertyName("uploadYear")]
 		public int UploadYear { get; set; }

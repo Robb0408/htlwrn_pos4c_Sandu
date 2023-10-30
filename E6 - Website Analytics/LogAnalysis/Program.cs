@@ -3,13 +3,14 @@ using System.Text.Json;
 using LogAnalysis;
 using LogAnalysis.Logic;
 
+List<string> allowedParams = new() { "monthly", "hourly", "photographers" };
 
 if (args.Length == 0)
 {
     Console.WriteLine("No arguments given");
     Environment.Exit(4);
 }
-else if (!args.Contains("monthly") && !args.Contains("hourly"))
+else if (!allowedParams.Contains(args[0]))
 {
     Console.WriteLine("Invalid argument");
     Environment.Exit(5);
@@ -77,14 +78,10 @@ else if (args[0] == "hourly")
             Console.WriteLine($"\t{time.Key}: {decimal.Round(decimal.Divide(time.Value * 100, totalDownloads), 2)} %");
         }
     }
-} else
+}
+else
 {
-    var test = JsonSerializer.Deserialize<List<(string, string, int)>>(File.ReadAllText("photographers.json"));
-
-    foreach (var item in test)
-    {
-        Console.WriteLine($"Picture: {item.Item1}\nTaken by: {item.Item2}\nYear: {item.Item3}");
-    }
+    LogAnalyzer.GetPhotographerCount(dataList).ForEach(n => Console.WriteLine($"{n.Key}: {n.Value}"));
 }
 
  ///////////////////////////////////
