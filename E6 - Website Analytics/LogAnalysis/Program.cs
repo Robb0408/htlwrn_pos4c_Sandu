@@ -80,5 +80,5 @@ else if (args[0] == "hourly")
 }
 else
 {
-    LogAnalyzer.GetPhotographerCount(dataList).ForEach(n => Console.WriteLine($"{n.Key[0]}: {n.Value}"));
+    LogAnalyzer.GetPhotographerCount(dataList).ForEach(n => Console.WriteLine($"{n.Key.ElementAt(0)}: {n.Value}"));
 }
