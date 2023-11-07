@@ -1,5 +1,4 @@
 ﻿using System.Globalization;
-using System.Text.Json;
 using LogAnalysis;
 using LogAnalysis.Logic;
 
@@ -81,12 +80,5 @@ else if (args[0] == "hourly")
 }
 else
 {
-    LogAnalyzer.GetPhotographerCount(dataList).ForEach(n => Console.WriteLine($"{n.Key}: {n.Value}"));
+    LogAnalyzer.GetPhotographerCount(dataList).ForEach(n => Console.WriteLine($"{n.Key[0]}: {n.Value}"));
 }
-
- ///////////////////////////////////
-// TODO: -Advanced Requirements   //
-//                                //
-// DONE: -Minimum Requirements    //
-//       -Additional Requirements //
-///////////////////////////////////

@@ -7,11 +7,11 @@ public static class LogAnalyzer
     public static IOrderedEnumerable<KeyValuePair<string, IOrderedEnumerable<KeyValuePair<string, int>>>> AnalyzeMonthly(List<Data> linesOfData)
     {
         return linesOfData
-            .GroupBy(data => data.Url)
+            .GroupBy(data => data.Url, data => data.Date)
             .ToDictionary(
                 group => group.Key,
                 group => group
-                    .GroupBy(data => data.Date.ToString("yyyy-MM"))
+                    .GroupBy(data => data.ToString("yyyy-MM"))
                     .ToDictionary(
                         dateGroup => dateGroup.Key,
                         dateGroup => dateGroup.Count()
@@ -24,11 +24,11 @@ public static class LogAnalyzer
     public static IOrderedEnumerable<KeyValuePair<string, IOrderedEnumerable<KeyValuePair<string, int>>>> AnalyzeHourly(List<Data> linesOfData)
     {
         return linesOfData
-            .GroupBy(data => data.Url)
+            .GroupBy(data => data.Url, data => data.Date)
             .ToDictionary(
                 group => group.Key,
                 group => group
-                    .GroupBy(data => data.Date.ToString("HH" + ":00"))
+                    .GroupBy(data => data.ToString("HH:00"))
                     .ToDictionary(
                         dateGroup => dateGroup.Key,
                         dateGroup => dateGroup.Count()
@@ -38,24 +38,17 @@ public static class LogAnalyzer
             .OrderBy(n => n.Key);
     }
 
-    public static List<KeyValuePair<string, int>> GetPhotographerCount(List<Data> dataList)
+    public static List<KeyValuePair<List<string>, int>> GetPhotographerCount(List<Data> dataList)
     {
         var photos = JsonSerializer.Deserialize<List<Photo>>(File.ReadAllText("photographers.json"))!;
-        List<KeyValuePair<string, int>> photographerPicCount = new();
 
-        foreach (var item in photos)
-        {
-            var test = dataList
-                .Where(n => n.Url == item.Pic)
-                .GroupBy(n => n.Url)
-                .ToDictionary(
-                    group => item.TakenBy,
-                    group => group.Count()
-                )
-                .First();
-
-            photographerPicCount.Add(test);
-        }
-        return photographerPicCount.OrderByDescending(n => n.Value).ToList();
+        return dataList
+            .GroupBy(n => n.Url)
+            .ToDictionary(
+                group => photos.Where(photo => photo.Pic == group.Key).Select(photo => photo.TakenBy).ToList(),
+                group => group.Count()
+            )
+            .OrderByDescending(n => n.Value)
+            .ToList();
     }
 }

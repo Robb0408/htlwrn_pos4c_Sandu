@@ -2,6 +2,7 @@
   "profiles": {
     "E6 - Website Analytics": {
       "commandName": "Project",
+      "commandLineArgs": "hourly"
     }
   }
 }
