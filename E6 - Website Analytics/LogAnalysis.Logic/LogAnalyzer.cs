@@ -38,17 +38,13 @@ public static class LogAnalyzer
             .OrderBy(n => n.Key);
     }
 
-    public static List<KeyValuePair<IEnumerable<string>, int>> GetPhotographerCount(List<Data> dataList)
+    public static IEnumerable<KeyValuePair<string, int>> GetPhotographerCount(List<Data> dataList)
     {
-        var photos = JsonSerializer.Deserialize<List<Photo>>(File.ReadAllText("photographers.json"))!;
-
-        return dataList
-            .GroupBy(n => n.Url)
+        return JsonSerializer.Deserialize<List<Photo>>(File.ReadAllText("photographers.json"))!
+            .GroupBy(photo => photo.TakenBy)
             .ToDictionary(
-                group => photos.Where(photo => photo.Pic == group.Key).Select(photo => photo.TakenBy),
-                group => group.Count()
-            )
-            .OrderByDescending(n => n.Value)
-            .ToList();
+                group => group.Key,
+                group => dataList.Count(data => group.Any(p => p.Pic == data.Url)))
+            .OrderByDescending(p => p.Value);
     }
 }
