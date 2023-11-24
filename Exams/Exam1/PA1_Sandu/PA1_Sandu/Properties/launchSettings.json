@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "PA1_Sandu": {
+      "commandName": "Project",
+      "commandLineArgs": "--country"
+    }
+  }
+}
