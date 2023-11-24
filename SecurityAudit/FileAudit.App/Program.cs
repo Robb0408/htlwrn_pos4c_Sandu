@@ -1,4 +1,6 @@
-﻿List<string> allowedParams = new() { "log", "clean" };
+﻿using FileAudit.Logic;
+
+List<string> allowedParams = new() { "log", "clean" };
 
 if (args.Length == 0
     || (args.Length == 1 && !allowedParams.Contains(args[0]))
@@ -11,7 +13,24 @@ if (args.Length == 0
         "dotnet run -- clean\t\tClears all entries from the database");
     return;
 }
+string command = args[0];
+SecurityWatcher watcher = new();
 
-using FileSystemWatcher watcher = new(args[1]);
+switch (command)
+{
+    case "watch":
+        await watcher.StartWatcher(args[1]);
+        break;
 
-// continue
+    case "log":
+        await watcher.GetAllEntries();
+        break;
+
+    case "clean":
+        await watcher.DeleteAllEntries();
+        break;
+
+    default:
+        Console.WriteLine("Unexpected error");
+        break;
+}
