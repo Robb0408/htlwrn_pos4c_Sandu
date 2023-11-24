@@ -16,4 +16,12 @@ public class FileAudit
 
     [MaxLength(500)]
     public string FullPath { get; set; } = null!;
+
+    public FileAudit(string fileName, string changeType, DateTime timestamp, string fullPath)
+    {
+        FileName = fileName;
+        ChangeType = changeType;
+        Timestamp = timestamp;
+        FullPath = fullPath;
+    }
 }

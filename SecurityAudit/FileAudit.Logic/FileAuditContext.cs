@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.IO;
+using Microsoft.EntityFrameworkCore;
 
 namespace FileAudit.Logic
 {
@@ -6,11 +7,10 @@ namespace FileAudit.Logic
 	{
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseInMemoryDatabase("FileAuditDB");
+            optionsBuilder.UseSqlite($"Data Source={Directory.GetCurrentDirectory()}/SecurityAudit.db");
         }
 
-		public DbSet<FileAudit> FileAudits { get; set; } = null!;
-    }
+		public DbSet<FileAudit> FileAudits => null!;
+	}
 }
 
