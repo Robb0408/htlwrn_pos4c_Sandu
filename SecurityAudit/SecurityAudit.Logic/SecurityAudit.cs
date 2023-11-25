@@ -1,46 +1,43 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SecurityAudit.Database;
 
-namespace FileAudit.Logic;
+namespace SecurityAudit.Logic;
 
-public class SecurityWatcher
+public class SecurityAudit
 {
     private FileAuditContext Context { get; } = new();
-
+    
     /// <summary>
     /// Starts a watcher which watches for changes, creations, deletions and renames.
     /// The captured events will be stored in a database.
     /// </summary>
-    /// <param name="path">Path where the watcher acts.</param>
+    /// <param name="path">Path where the watcher captures activities.</param>
     /// <exception cref="DirectoryNotFoundException"></exception>
-    public async Task StartWatcher(string path)
+    public async Task StartWatcherAsync(string path)
     {
-
         if (!Directory.Exists(path))
         {
             throw new DirectoryNotFoundException();
         }
-
-        FileSystemWatcher watcher = new()
-        {
-            Path = path
-        };
-
-        watcher.Changed += (sender, eventArgs) =>
+        
+        FileSystemWatcher watcher = new(path);
+        
+        watcher.Changed += (_, eventArgs) =>
         {
             AddFileToContext(Path.GetFileName(eventArgs.FullPath), eventArgs.ChangeType.ToString(), 
                 eventArgs.FullPath);
         };
-        watcher.Created += (sender, eventArgs) =>
+        watcher.Created += (_, eventArgs) =>
         {
             AddFileToContext(Path.GetFileName(eventArgs.FullPath), eventArgs.ChangeType.ToString(), 
                 eventArgs.FullPath);
         };
-        watcher.Deleted += (sender, eventArgs) =>
+        watcher.Deleted += (_, eventArgs) =>
         {
             AddFileToContext(Path.GetFileName(eventArgs.FullPath), eventArgs.ChangeType.ToString(), 
                 eventArgs.FullPath);
         };
-        watcher.Renamed += (sender, eventArgs) =>
+        watcher.Renamed += (_, eventArgs) =>
         {
             AddFileToContext($"{Path.GetFileName(eventArgs.OldFullPath)} => " +
                              $"{Path.GetFileName(eventArgs.FullPath)}",
@@ -49,28 +46,22 @@ public class SecurityWatcher
             );
         };
         watcher.EnableRaisingEvents = true;
-        Console.WriteLine(
-            "\\ \\        / /  | |     | |              \n" +
-            " \\ \\  /\\  / /_ _| |_ ___| |__   ___ _ __ \n" +
-            "  \\ \\/  \\/ / _` | __/ __| '_ \\ / _ \\ '__|\n" +
-            "   \\  /\\  / (_| | || (__| | | |  __/ |   \n" +
-            "    \\/  \\/ \\__,_|\\__\\___|_| |_|\\___|_|  \n" +
-            $"\nWatcher started at {watcher.Path}\n" +
-            "\nStop watcher by pressing any key . . .");
+        Console.WriteLine($"Watcher started capturing at {path}\nPress any key to end...");
         Console.ReadKey(true);
         await Context.SaveChangesAsync();
         Console.WriteLine("Watcher stopped!\n" +
-                          "View the changes with the <log> command or clear all entries with <clean>");
+                          "View all tracked activities with the <log> command or " +
+                          "clear all entries with <clean>");
         watcher.Dispose();
     }
-
+    
     /// <summary>
     /// Gets all entries from the database.
     /// </summary>
     /// <returns>
     /// List of FileAudit entries.
     /// </returns>
-    public async Task GetAllEntries()
+    public async Task GetAllEntriesAsync()
     {
         var audits = await Context.FileAudits.ToListAsync();
         if (audits.Count > 0)
@@ -80,18 +71,25 @@ public class SecurityWatcher
         }
         else
         {
-            Console.WriteLine("No entries found");   
+            Console.WriteLine("No entries found to get");   
         }
     }
 
     /// <summary>
     /// Deletes all entries from the database
     /// </summary>
-    public async Task DeleteAllEntries()
+    public async Task DeleteAllEntriesAsync()
     {
-        Context.FileAudits.RemoveRange(Context.FileAudits);
-        await Context.SaveChangesAsync();
-        Console.WriteLine("All entries deleted");
+        if (Context.FileAudits.Any())
+        {
+            Context.FileAudits.RemoveRange(Context.FileAudits);
+            await Context.SaveChangesAsync();
+            Console.WriteLine("All entries deleted");
+        }
+        else
+        {
+            Console.WriteLine("No entries found to delete");
+        }
     }
 
     /// <summary>
@@ -102,6 +100,11 @@ public class SecurityWatcher
     /// <param name="fullPath">Full path to file</param>
     private void AddFileToContext(string fileName, string changeType, string fullPath)
     {
-        Context.Add(new FileAudit(fileName, changeType.ToUpper(), DateTime.Now, fullPath));
+        Context.FileAudits.Add(new FileAudit
+        {
+            FileName = fileName,
+            ChangeType = changeType.ToUpper(),
+            FullPath = fullPath
+        });
     }
 }
