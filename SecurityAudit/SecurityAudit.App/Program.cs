@@ -4,7 +4,14 @@ SecurityAudit.Logic.SecurityAudit audit = new(); // Rider does not allow me to t
 switch (command)
 {
     case "watch" when args.Length == 2:
-        await audit.StartWatcherAsync(args[1]);
+        try
+        {
+            await audit.StartWatcherAsync(args[1]);
+        }
+        catch (DirectoryNotFoundException)
+        {
+            Console.WriteLine("Directory does not exist");
+        }
         break;
 
     case "log":
