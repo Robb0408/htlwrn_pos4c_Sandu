@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace OrderImport.Database;
 
@@ -16,7 +17,7 @@ public class OrderImportContextFactory : IDesignTimeDbContextFactory<OrderImport
         optionsBuilder
             // Uncomment the following line if you want to print generated
             // SQL statements on the console.
-            // .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()))
+            .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()))
             .UseSqlServer(configuration["ConnectionStrings:DefaultConnection"]);
 
         return new OrderImportContext(optionsBuilder.Options);

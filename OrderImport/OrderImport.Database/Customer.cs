@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace OrderImport.Database;
 
+[Index(nameof(Name), IsUnique=true)]
 public class Customer
 {
     public int Id { get; set; }
