@@ -16,15 +16,16 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="app-settings.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
       <None Update="customers.txt">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
       <None Update="orders.txt">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\OrderImport.Logic\OrderImport.Logic.csproj" />
     </ItemGroup>
 
 </Project>
