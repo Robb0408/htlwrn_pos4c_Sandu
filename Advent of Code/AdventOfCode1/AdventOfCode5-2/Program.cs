@@ -25,10 +25,9 @@ tempList.ForEach(pair =>
     }
 });
 
-content = content.Skip(2).ToArray();
 var completeSeeds = new List<Seed>();
 
-foreach (var seed in seeds)
+seeds.ForEach(seed =>
 {
     var isSoil = false;
     var isFertilizer = false;
@@ -98,7 +97,7 @@ foreach (var seed in seeds)
     seed.Location = Map(seed.Humidity, mapping);
     mapping.Clear();
     completeSeeds.Add(seed);
-}
+});
 
 foreach (var seed in completeSeeds)
 {
