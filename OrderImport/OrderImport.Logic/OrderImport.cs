@@ -86,7 +86,8 @@ public class OrderImport
         
         if (customers.Count == 0)
         {
-            Console.WriteLine("No customers have exceeded their credit limit");
+            Console.WriteLine("No customers have exceeded their credit limit or " +
+                              "there are no entries in the database");
             return;
         }
         var longestName = customers.Max(c => c.Name.Length) + 10;
