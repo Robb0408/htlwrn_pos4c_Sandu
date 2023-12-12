@@ -83,6 +83,12 @@ public class OrderImport
             .Include(c => c.Orders)
             .Where(c => c.CreditLimit < c.Orders.Sum(o => o.OrderValue))
             .ToListAsync();
+        
+        if (customers.Count == 0)
+        {
+            Console.WriteLine("No customers have exceeded their credit limit");
+            return;
+        }
         var longestName = customers.Max(c => c.Name.Length) + 10;
         Console.WriteLine($"{"Name".PadRight(longestName)}" +
                           $"{"Credit Limit".PadRight(longestName)}" +
