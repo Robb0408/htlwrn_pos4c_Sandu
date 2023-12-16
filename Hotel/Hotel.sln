@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hotel.Console", "Hotel.Console\Hotel.Console.csproj", "{BAEAEB8E-3B14-4903-BE36-40F88586493E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hotel.Database", "Hotel.Database\Hotel.Database.csproj", "{091344A0-B18F-4864-A3C1-507358BD9C71}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BAEAEB8E-3B14-4903-BE36-40F88586493E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAEAEB8E-3B14-4903-BE36-40F88586493E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAEAEB8E-3B14-4903-BE36-40F88586493E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAEAEB8E-3B14-4903-BE36-40F88586493E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{091344A0-B18F-4864-A3C1-507358BD9C71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{091344A0-B18F-4864-A3C1-507358BD9C71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{091344A0-B18F-4864-A3C1-507358BD9C71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{091344A0-B18F-4864-A3C1-507358BD9C71}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
