@@ -16,48 +16,61 @@ public class OrderImport
     /// <exception cref="Exception"></exception>
     public async Task ImportAsync(string customerFile, string orderFile)
     {
-        string[] customers;
-        string[] orders;
-        customers = await File.ReadAllLinesAsync(customerFile);
-        orders = await File.ReadAllLinesAsync(orderFile);
+        var customers = await File.ReadAllLinesAsync(customerFile);
+        var orders = await File.ReadAllLinesAsync(orderFile);
 
         await using var context = new OrderImportContextFactory().CreateDbContext();
-        var customerList = customers
-            .Skip(1)
-            .Select(customer =>
-            {
-                var splitCustomer = customer.Split("\t");
-                return new Customer
+        var transaction = await context.Database.BeginTransactionAsync();
+        int rowsCustomers;
+        int rowsOrders;
+        try
+        {
+            var customerList = customers
+                .Skip(1)
+                .Select(customer =>
                 {
-                    Name = splitCustomer[0],
-                    CreditLimit = decimal.Parse(splitCustomer[1], CultureInfo.InvariantCulture),
-                    Orders = new List<Order>()
-                };
-            })
-            .ToList();
+                    var splitCustomer = customer.Split("\t");
+                    return new Customer
+                    {
+                        Name = splitCustomer[0],
+                        CreditLimit = decimal.Parse(splitCustomer[1], CultureInfo.InvariantCulture),
+                        Orders = new List<Order>()
+                    };
+                })
+                .ToList();
 
-        context.Customers.AddRange(customerList);
-        var rowsCustomers = await context.SaveChangesAsync();
-        
-        
-        var orderList = orders
-            .Skip(1)
-            .Select(order =>
-            {
-                var splitOrder = order.Split("\t");
-                var customer = context.Customers
-                    .FirstOrDefault(c => c.Name == splitOrder[0]);
-                return new Order
+            context.Customers.AddRange(customerList);
+            rowsCustomers = await context.SaveChangesAsync();
+
+            var orderList = orders
+                .Skip(1)
+                .Select(order =>
                 {
-                    OrderDate = DateTime.Parse(splitOrder[1], new CultureInfo("en-US")),
-                    OrderValue = decimal.Parse(splitOrder[2], CultureInfo.InvariantCulture),
-                    CustomerId = customer!.Id
-                };
-            })
-            .ToList();
-        
-        context.Orders.AddRange(orderList);
-        var rowsOrders = await context.SaveChangesAsync();
+                    var splitOrder = order.Split("\t");
+                    var customer = context.Customers
+                        .FirstOrDefault(c => c.Name == splitOrder[0]);
+                    return new Order
+                    {
+                        OrderDate = DateTime.Parse(splitOrder[1], new CultureInfo("en-US")),
+                        OrderValue = decimal.Parse(splitOrder[2], CultureInfo.InvariantCulture),
+                        CustomerId = customer!.Id
+                    };
+                })
+                .ToList();
+
+            context.Orders.AddRange(orderList);
+            rowsOrders = await context.SaveChangesAsync();
+        }
+        catch (Exception)
+        {
+            await transaction.RollbackAsync();
+            throw;
+        }
+        finally
+        {
+            await transaction.CommitAsync();
+        }
+
         Console.WriteLine("Imported {0} customers successfully", rowsCustomers);
         Console.WriteLine("Imported {0} orders successfully", rowsOrders);
     }
@@ -68,9 +81,28 @@ public class OrderImport
     public async Task CleanAsync()
     {
         await using var context = new OrderImportContextFactory().CreateDbContext();
-        context.Customers.RemoveRange(context.Customers);
-        context.Orders.RemoveRange(context.Orders);
-        var rows = await context.SaveChangesAsync();
+        //mäßig
+        //context.Customers.RemoveRange(context.Customers);
+        //context.Orders.RemoveRange(context.Orders);
+        //gute
+        var transaction = await context.Database.BeginTransactionAsync();
+        int rows;
+        try
+        {
+            context.Orders.FromSql($"DELETE FROM Orders");
+            context.Customers.FromSql($"DELETE FROM Customers");
+            rows = await context.SaveChangesAsync();
+        }
+        catch (Exception)
+        {
+            await transaction.RollbackAsync();
+            throw;
+        }
+        finally
+        {
+            await transaction.CommitAsync();
+        }
+
         Console.WriteLine("Cleaned {0} entries successfully", rows);
     }
     /// <summary>
@@ -80,6 +112,7 @@ public class OrderImport
     {
         await using var context = new OrderImportContextFactory().CreateDbContext();
         var customers = await context.Customers
+            .AsNoTracking()
             .Include(c => c.Orders)
             .Where(c => c.CreditLimit < c.Orders.Sum(o => o.OrderValue))
             .ToListAsync();
@@ -90,6 +123,7 @@ public class OrderImport
                               "there are no entries in the database");
             return;
         }
+        
         var longestName = customers.Max(c => c.Name.Length) + 10;
         Console.WriteLine($"{"Name".PadRight(longestName)}" +
                           $"{"Credit Limit".PadRight(longestName)}" +
