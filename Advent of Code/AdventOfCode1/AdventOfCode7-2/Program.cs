@@ -111,4 +111,5 @@ foreach (var hand in orderedHands)
 }
 
 Console.WriteLine(result.Sum());
-//251824095
+// Not working properly
+// Expected: 251824095
