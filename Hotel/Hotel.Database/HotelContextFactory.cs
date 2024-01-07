@@ -7,7 +7,7 @@ namespace Hotel.Logic;
 
 public class HotelContextFactory : IDesignTimeDbContextFactory<HotelContext>
 {
-    public HotelContext CreateDbContext(string[] args)
+    public HotelContext CreateDbContext(string[] args = null)
     {
         var configuration = new ConfigurationBuilder()
             .AddJsonFile("app-settings.json")
@@ -15,7 +15,7 @@ public class HotelContextFactory : IDesignTimeDbContextFactory<HotelContext>
         
         var optionsBuilder = new DbContextOptionsBuilder<HotelContext>();
         optionsBuilder
-            .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()))
+            //.UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()))
             .UseSqlServer(configuration["ConnectionStrings:DefaultConnection"]);
 
         return new HotelContext(optionsBuilder.Options);

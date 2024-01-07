@@ -11,7 +11,8 @@ public class RoomType
     public string Title { get; set; } = null!;
     [MaxLength(500)]
     public string Description { get; set; } = null!;
-    public int Size { get; set; }
+    [MaxLength(20)]
+    public string Size { get; set; } = null!;
     public bool IsDisabilityAccessible { get; set; }
     public int FreeRooms { get; set; }
     public Price Price { get; set; } = null!;
