@@ -7,7 +7,7 @@ namespace Hotel.Logic;
 
 public class HotelContextFactory : IDesignTimeDbContextFactory<HotelContext>
 {
-    public HotelContext CreateDbContext(string[] args = null)
+    public HotelContext CreateDbContext(string[] args = null!)
     {
         var configuration = new ConfigurationBuilder()
             .AddJsonFile("app-settings.json")

@@ -11,8 +11,11 @@ public class HotelManager
     /// <param name="fileName"></param>
     public async Task AddHotelsAsync(string fileName)
     {
+        Console.Write("Connecting to database...");
         await using var context = new HotelContextFactory().CreateDbContext();
+        Console.WriteLine("Complete");
         // Add fixed hotel specials
+        Console.Write("Adding specials...");
         var specialList = new List<Special>
         {
             new() { Description = "Spa" },
@@ -27,7 +30,8 @@ public class HotelManager
         };
         await context.Specials.AddRangeAsync(specialList);
         await context.SaveChangesAsync();
-
+        Console.WriteLine("Complete");
+        
         // Add hotels from file
         var lines = await File.ReadAllLinesAsync(fileName);
         var sb = new StringBuilder();
@@ -35,7 +39,7 @@ public class HotelManager
 
         foreach (var line in lines)
         {
-            if (line == string.Empty)
+            if (line.Replace("\t", string.Empty) == string.Empty)
             {
                 hotelList.Add(sb.ToString());
                 sb.Clear();
@@ -49,10 +53,11 @@ public class HotelManager
         // Make sure that last hotel is added -> no empty line at the end of file needed
         hotelList.Add(sb.ToString());
         sb.Clear();
-
+        
+        Console.Write("Adding hotels...");
         foreach (var hotel in hotelList)
         {
-            var hotelInfo = hotel.Split("\t").Where(s => s != string.Empty).ToList();
+            var hotelInfo = hotel.Split("\t").Where(s => s != string.Empty).ToArray();
             var hotelName = hotelInfo[0];
             var hotelAddress = hotelInfo[1].Split(", ");
             var hotelStreet = hotelAddress[0];
@@ -72,7 +77,8 @@ public class HotelManager
 
             foreach (var special in hotelSpecials)
             {
-                var specialEntity = await context.Specials.FirstAsync(s => s.Description == special);
+                var specialEntity = await context.Specials.FirstAsync(s =>
+                    string.Equals(s.Description.ToLower(), special.ToLower()));
                 specialEntity.Hotels.Add(newHotel);
                 newHotel.Specials.Add(specialEntity);
             }
@@ -110,6 +116,8 @@ public class HotelManager
             context.Hotels.Add(newHotel);
             await context.SaveChangesAsync();
         }
+        Console.WriteLine("Complete");
+        Console.WriteLine("Hotels added");
     }
 
     /// <summary>
@@ -141,75 +149,90 @@ public class HotelManager
             return;
         }
 
-        Console.WriteLine("Write the search results into a markdown file? (y/N)");
+        Console.Write("Write the search results into a markdown file? (y/N) ");
         var input = Console.ReadKey();
+        Console.WriteLine();
 
-        if (input.Key is ConsoleKey.Enter or ConsoleKey.N)
+        switch (input.Key)
         {
-            foreach (var hotel in hotels)
+            case ConsoleKey.Enter or ConsoleKey.N:
             {
-                Console.WriteLine($"# {hotel.Name}");
-                Console.WriteLine();
-                Console.WriteLine("## Location");
-                Console.WriteLine();
-                Console.WriteLine($"{hotel.Street}");
-                Console.WriteLine($"{hotel.ZipCode} {hotel.City}");
-                Console.WriteLine();
-                Console.WriteLine("## Specials");
-                Console.WriteLine();
-                foreach (var special in hotel.Specials)
+                Console.WriteLine("Listing hotels...");
+                Console.WriteLine("Results:\n");
+                foreach (var hotel in hotels)
                 {
-                    Console.WriteLine($"- {special.Description}");
+                    Console.WriteLine($"# {hotel.Name}");
+                    Console.WriteLine();
+                    Console.WriteLine("## Location");
+                    Console.WriteLine();
+                    Console.WriteLine($"{hotel.Street}");
+                    Console.WriteLine($"{hotel.ZipCode} {hotel.City}");
+                    Console.WriteLine();
+                    Console.WriteLine("## Specials");
+                    Console.WriteLine();
+                    foreach (var special in hotel.Specials)
+                    {
+                        Console.WriteLine($"- {special.Description}");
+                    }
+
+                    Console.WriteLine();
+                    Console.WriteLine("## Room types");
+                    Console.WriteLine();
+                    Console.WriteLine("| Room Type   |  Size | Price Valid From | Price Valid To | Price in € |");
+                    Console.WriteLine("| ----------- | ----: | ---------------- | -------------- | ---------: |");
+                    foreach (var roomType in hotel.RoomTypes)
+                    {
+                        Console.WriteLine(
+                            $"| {roomType.Title} | {roomType.Size} | {roomType.Price.ValidFrom:dd.MM.yyyy} | {roomType.Price.ValidTo:dd.MM.yyyy} | {roomType.Price.PricePerNight} € |");
+                    }
+
+                    Console.WriteLine("---");
+                    Console.WriteLine();
                 }
 
-                Console.WriteLine();
-                Console.WriteLine("## Room types");
-                Console.WriteLine();
-                Console.WriteLine("| Room Type   |  Size | Price Valid From | Price Valid To | Price in € |");
-                Console.WriteLine("| ----------- | ----: | ---------------- | -------------- | ---------: |");
-                foreach (var roomType in hotel.RoomTypes)
-                {
-                    Console.WriteLine(
-                        $"| {roomType.Title} | {roomType.Size} | {roomType.Price.ValidFrom:dd.MM.yyyy} | {roomType.Price.ValidTo:dd.MM.yyyy} | {roomType.Price.PricePerNight} € |");
-                }
-
-                Console.WriteLine("---");
-                Console.WriteLine();
+                break;
             }
-        }
-        else if (input.Key is ConsoleKey.Y)
-        {
-            await using StreamWriter file = new("hotels.md");
-            foreach (var hotel in hotels)
+            case ConsoleKey.Y:
             {
-                await file.WriteLineAsync($"# {hotel.Name}");
-                await file.WriteLineAsync();
-                await file.WriteLineAsync("## Location");
-                await file.WriteLineAsync();
-                await file.WriteLineAsync($"{hotel.Street}");
-                await file.WriteLineAsync($"{hotel.ZipCode} {hotel.City}");
-                await file.WriteLineAsync();
-                await file.WriteLineAsync("## Specials");
-                await file.WriteLineAsync();
-                foreach (var special in hotel.Specials)
+                Console.Write("Writing to file...");
+                await using StreamWriter file = new("hotels.md");
+                foreach (var hotel in hotels)
                 {
-                    await file.WriteLineAsync($"- {special.Description}");
-                }
+                    await file.WriteLineAsync($"# {hotel.Name}");
+                    await file.WriteLineAsync();
+                    await file.WriteLineAsync("## Location");
+                    await file.WriteLineAsync();
+                    await file.WriteLineAsync($"{hotel.Street}");
+                    await file.WriteLineAsync($"{hotel.ZipCode} {hotel.City}");
+                    await file.WriteLineAsync();
+                    await file.WriteLineAsync("## Specials");
+                    await file.WriteLineAsync();
+                    foreach (var special in hotel.Specials)
+                    {
+                        await file.WriteLineAsync($"- {special.Description}");
+                    }
 
-                await file.WriteLineAsync();
-                await file.WriteLineAsync("## Room types");
-                await file.WriteLineAsync();
-                await file.WriteLineAsync("| Room Type   |  Size | Price Valid From | Price Valid To | Price in € |");
-                await file.WriteLineAsync("| ----------- | ----: | ---------------- | -------------- | ---------: |");
-                foreach (var roomType in hotel.RoomTypes)
-                {
-                    await file.WriteLineAsync(
-                        $"| {roomType.Title} | {roomType.Size} | {roomType.Price.ValidFrom:dd.MM.yyyy} | {roomType.Price.ValidTo:dd.MM.yyyy} | {roomType.Price.PricePerNight} € |");
-                }
+                    await file.WriteLineAsync();
+                    await file.WriteLineAsync("## Room types");
+                    await file.WriteLineAsync();
+                    await file.WriteLineAsync("| Room Type   |  Size | Price Valid From | Price Valid To | Price in € |");
+                    await file.WriteLineAsync("| ----------- | ----: | ---------------- | -------------- | ---------: |");
+                    foreach (var roomType in hotel.RoomTypes)
+                    {
+                        await file.WriteLineAsync(
+                            $"| {roomType.Title} | {roomType.Size} | {roomType.Price.ValidFrom:dd.MM.yyyy} | {roomType.Price.ValidTo:dd.MM.yyyy} | {roomType.Price.PricePerNight} € |");
+                    }
 
-                await file.WriteLineAsync("---");
-                await file.WriteLineAsync();
+                    await file.WriteLineAsync("---");
+                    await file.WriteLineAsync();
+                }
+                Console.WriteLine("Complete");
+                Console.WriteLine("Hotels written to file \"hotels.md\"");
+                break;
             }
+            default:
+                Console.WriteLine("Unknown command");
+                break;
         }
     }
 
@@ -218,7 +241,10 @@ public class HotelManager
     /// </summary>
     public async Task DeleteAllAsync()
     {
+        Console.Write("Connecting to database...");
         await using var context = new HotelContextFactory().CreateDbContext();
+        Console.WriteLine("Complete");
+        Console.Write("Deleting all hotels...");
         context.Hotels.RemoveRange(context.Hotels);
         await context.SaveChangesAsync();
         context.Specials.RemoveRange(context.Specials);
@@ -227,6 +253,7 @@ public class HotelManager
         await context.SaveChangesAsync();
         context.Prices.RemoveRange(context.Prices);
         await context.SaveChangesAsync();
+        Console.WriteLine("Complete");
         Console.WriteLine("All hotels deleted");
     }
 }
