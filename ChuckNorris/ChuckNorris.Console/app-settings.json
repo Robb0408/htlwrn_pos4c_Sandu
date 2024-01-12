@@ -1,0 +1,5 @@
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=localhost,1433;Database=Jokes;User Id=myLogin;Password=Pass1234!;TrustServerCertificate=True"
+  }
+}
