@@ -12,6 +12,5 @@ public class JokeContext : DbContext
     protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
     {
         configurationBuilder.Conventions.Remove(typeof(TableNameFromDbSetConvention));
-        configurationBuilder.Conventions.Remove(typeof(CascadeDeleteConvention));
     }
 }
