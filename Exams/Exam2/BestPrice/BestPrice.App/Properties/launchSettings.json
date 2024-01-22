@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "BestPrice.App": {
+      "commandName": "Project",
+      "commandLineArgs": "calculate shoppinglist.txt"
+    }
+  }
+}
