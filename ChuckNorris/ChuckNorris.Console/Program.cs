@@ -19,7 +19,7 @@ switch (command)
         break;
     default:
         // print usage of program
-        Console.WriteLine("Usage: ChuckNorris.Console [command]");
+        Console.WriteLine("Usage: dotnet run -- [command]");
         Console.WriteLine("Commands:");
         Console.WriteLine("--save: Saves jokes to database");
         Console.WriteLine("--list: Lists all jokes in database");

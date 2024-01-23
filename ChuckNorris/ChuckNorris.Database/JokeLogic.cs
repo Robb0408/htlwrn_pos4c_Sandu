@@ -5,7 +5,7 @@ namespace ChuckNorris.Database;
 
 public class JokeLogic
 {
-    private readonly HttpClient _client = new(); // underscore is a suggestions from rider
+    private readonly HttpClient client = new(); // underscore is a suggestions from rider
 
     /// <summary>
     /// Saves a number of jokes to the database
@@ -26,7 +26,7 @@ public class JokeLogic
         var transaction = await context.Database.BeginTransactionAsync();
         try
         {
-            while (context.Jokes.Count() < maxJokes)
+            for (var i = 0; i < maxJokes; i++)
             {
                 var retries = 0;
                 var joke = await GetRandomJokeAsync();
@@ -81,8 +81,11 @@ public class JokeLogic
         var transaction = await context.Database.BeginTransactionAsync();
         try
         {
+            var count = context.Jokes.Count();
             await context.Database.ExecuteSqlAsync($"DELETE FROM Joke");
             await context.SaveChangesAsync();
+            Console.WriteLine($"Deleted {count} jokes from database.");
+            await transaction.CommitAsync();
         }
         catch (Exception)
         {
@@ -90,9 +93,6 @@ public class JokeLogic
             await transaction.RollbackAsync();
             throw;
         }
-
-        Console.WriteLine($"Deleted {context.Jokes.Count()} jokes from database.");
-        await transaction.CommitAsync();
     }
 
     /// <summary>
@@ -107,7 +107,7 @@ public class JokeLogic
             JokeDummy jokeDummy;
             do
             {
-                var response = await _client.GetAsync("https://api.chucknorris.io/jokes/random");
+                var response = await client.GetAsync("https://api.chucknorris.io/jokes/random");
                 response.EnsureSuccessStatusCode();
                 jokeDummy = JsonSerializer.Deserialize<JokeDummy>(await response.Content.ReadAsStringAsync())!;
             } while (jokeDummy.Categories.Contains("explicit"));
