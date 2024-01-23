@@ -1,0 +1,6 @@
+Product;Amount
+Milk;3
+Apple;10
+Bread;5
+Eggs;40
+Orange Juice;2

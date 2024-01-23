@@ -1,0 +1,114 @@
+{
+  "Products": [
+    "Apple",
+    "Milk",
+    "Cheddar Cheese",
+    "Bread",
+    "Orange Juice",
+    "Eggs",
+    "Butter",
+    "Yogurt",
+    "Cereal",
+    "Chicken Breast"
+  ],
+  "Vendors": [
+    "Bolla",
+    "Spor",
+    "FreshFarm",
+    "GreenGrocer"
+  ],
+  "Availabilities": [
+    {
+      "Vendor": "Bolla",
+      "Product": "Apple",
+      "Amount": 100,
+      "Price": 2.40
+    },
+    {
+      "Vendor": "Spor",
+      "Product": "Apple",
+      "Amount": 10,
+      "Price": 1.90
+    },
+    {
+      "Vendor": "Spor",
+      "Product": "Milk",
+      "Amount": 3,
+      "Price": 1.49
+    },
+    {
+      "Vendor": "FreshFarm",
+      "Product": "Bread",
+      "Amount": 50,
+      "Price": 2.50
+    },
+    {
+      "Vendor": "GreenGrocer",
+      "Product": "Orange Juice",
+      "Amount": 30,
+      "Price": 3.00
+    },
+    {
+      "Vendor": "Bolla",
+      "Product": "Eggs",
+      "Amount": 40,
+      "Price": 2.10
+    },
+    {
+      "Vendor": "GreenGrocer",
+      "Product": "Eggs",
+      "Amount": 40,
+      "Price": 3.00
+    },
+    {
+      "Vendor": "Spor",
+      "Product": "Butter",
+      "Amount": 25,
+      "Price": 3.50
+    },
+    {
+      "Vendor": "FreshFarm",
+      "Product": "Yogurt",
+      "Amount": 20,
+      "Price": 1.99
+    },
+    {
+      "Vendor": "GreenGrocer",
+      "Product": "Cereal",
+      "Amount": 15,
+      "Price": 4.00
+    },
+    {
+      "Vendor": "Bolla",
+      "Product": "Chicken Breast",
+      "Amount": 30,
+      "Price": 5.00
+    }
+  ],
+  "SpecialOffers": [
+    {
+      "Vendor": "Bolla",
+      "Product": "Apple",
+      "DiscountRate": 0.11,
+      "MinAmount": 3
+    },
+    {
+      "Vendor": "FreshFarm",
+      "Product": "Bread",
+      "DiscountRate": 0.05,
+      "MinAmount": 5
+    },
+    {
+      "Vendor": "GreenGrocer",
+      "Product": "Orange Juice",
+      "DiscountRate": 0.10,
+      "MinAmount": 2
+    },
+    {
+      "Vendor": "Spor",
+      "Product": "Butter",
+      "DiscountRate": 0.15,
+      "MinAmount": 10
+    }
+  ]
+}
