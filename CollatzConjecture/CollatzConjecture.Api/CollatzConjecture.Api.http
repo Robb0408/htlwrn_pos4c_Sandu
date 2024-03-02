@@ -1,5 +1,31 @@
-@CollatzConjecture.Api_HostAddress = http://localhost:5194
+@CollatzConjecture.Api_HostAddress = http://localhost:5132
 
 GET {{CollatzConjecture.Api_HostAddress}}/number/5
+Accept: Text/Plain
+
+###
+
+GET {{CollatzConjecture.Api_HostAddress}}/number/valid/5
+Accept: Text/Plain
+
+###
+
+GET {{CollatzConjecture.Api_HostAddress}}/string/5A
+Accept: Text/Plain
+
+###
+
+GET {{CollatzConjecture.Api_HostAddress}}/string/valid/5A
+Accept: Text/Plain
+
+###
+
+GET {{CollatzConjecture.Api_HostAddress}}/string/5
+Accept: Text/Plain
+
+###
+
+GET {{CollatzConjecture.Api_HostAddress}}/string/valid/5
+Accept: Text/Plain
 
 ###

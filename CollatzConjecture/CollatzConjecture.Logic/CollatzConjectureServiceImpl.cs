@@ -5,18 +5,42 @@ namespace CollatzConjecture.Logic;
 
 public class CollatzConjectureServiceImpl : ICollatzConjectureService
 {
+    /// <summary>
+    /// Shows if the sequence reaches 1
+    /// </summary>
+    /// <remarks>
+    /// Integers are used for numbers that are small enough to be stored
+    /// </remarks>
+    /// <param name="number"></param>
+    /// <returns></returns>
     public bool IsSequenceValid(int number)
     {
         var result = GetSequence(number); 
         return result.Count > 0 && result[^1] == 1;
     }
 
+    /// <summary>
+    /// Shows if the sequence reaches 1
+    /// </summary>
+    /// <remarks>
+    /// Strings are used for numbers that are too big to be stored as int
+    /// </remarks>
+    /// <param name="number"></param>
+    /// <returns></returns>
     public bool IsSequenceValid(string number)
     {
         var result = GetSequence(number); 
         return result.Count > 0 && result[^1] == "1";
     }
 
+    /// <summary>
+    /// Returns the sequence of the 3n+1 problem
+    /// </summary>
+    /// <remarks>
+    /// Integers are used for numbers that are small enough to be stored
+    /// </remarks>
+    /// <param name="number"></param>
+    /// <returns></returns>
     public List<int> GetSequence(int number)
     {
         var current = number;
@@ -37,15 +61,23 @@ public class CollatzConjectureServiceImpl : ICollatzConjectureService
         return sequence;
     }
 
+    /// <summary>
+    /// Returns the sequence of the 3n+1 problem
+    /// </summary>
+    /// <remarks>
+    /// Strings are used for numbers that are too big to be stored as int
+    /// </remarks>
+    /// <param name="number"></param>
+    /// <returns></returns>
     public List<string> GetSequence(string number)
     {
+        var sequence = new List<string>();
         if (Regex.IsMatch(number, @".*\D+.*"))
         {
             Console.Error.WriteLine("Invalid input");
-            return [];
+            return sequence;
         }
         var n = number;
-        var sequence = new List<string>();
         do
         {
             sequence.Add(n);
@@ -65,6 +97,14 @@ public class CollatzConjectureServiceImpl : ICollatzConjectureService
         return sequence;
     }
 
+    /// <summary>
+    /// Adds one a number
+    /// </summary>
+    /// <remarks>
+    /// Strings are used for numbers that are too big to be stored as int
+    /// </remarks>
+    /// <param name="number"></param>
+    /// <returns></returns>
     public string AddOne(string number)
     {
         var index = 1;
@@ -110,6 +150,14 @@ public class CollatzConjectureServiceImpl : ICollatzConjectureService
         return sb.ToString();
     }
 
+    /// <summary>
+    /// Multiplies a number by three
+    /// </summary>
+    /// <remarks>
+    /// Strings are used for numbers that are too big to be stored as int
+    /// </remarks>
+    /// <param name="number"></param>
+    /// <returns></returns>
     public string MultiplyByThree(string number)
     {
         var index = 1;
@@ -139,6 +187,14 @@ public class CollatzConjectureServiceImpl : ICollatzConjectureService
         return sb.ToString();
     }
 
+    /// <summary>
+    /// Divides a number by two
+    /// </summary>
+    /// <remarks>
+    /// Strings are used for numbers that are too big to be stored as int
+    /// </remarks>
+    /// <param name="number"></param>
+    /// <returns></returns>
     public string DivideByTwo(string number)
     {
         // Add zero at the end to make sure to avoid out of range exception,
@@ -154,6 +210,10 @@ public class CollatzConjectureServiceImpl : ICollatzConjectureService
             currentNumber = currentNumber % 2 * 10 + int.Parse(n[index].ToString());
         } while (index < number.Length);
         // Remove zeros before first non-zero digit
+        if (sb[0] == '0')
+        {
+            return sb.ToString();
+        }
         return sb.ToString().TrimStart('0');
     }
 }

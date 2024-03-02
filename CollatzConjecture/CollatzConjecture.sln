@@ -1,12 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CollatzConjecture.App", "CollatzConjecture.App\CollatzConjecture.App.csproj", "{72E84FAF-6A28-4CB8-939F-619E55EE45CF}"
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CollatzConjecture.App", "CollatzConjecture.App\CollatzConjecture.App.csproj", "{72E84FAF-6A28-4CB8-939F-619E55EE45CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CollatzConjecture.Logic", "CollatzConjecture.Logic\CollatzConjecture.Logic.csproj", "{77D14350-6FFD-4023-A6F7-ED2D42E4120C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CollatzConjecture.Logic", "CollatzConjecture.Logic\CollatzConjecture.Logic.csproj", "{77D14350-6FFD-4023-A6F7-ED2D42E4120C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CollatzConjecture.Test", "CollatzConjecture.Test\CollatzConjecture.Test.csproj", "{C51065EC-1245-44C3-88C0-F8F2225219BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CollatzConjecture.Test", "CollatzConjecture.Test\CollatzConjecture.Test.csproj", "{C51065EC-1245-44C3-88C0-F8F2225219BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CollatzConjecture.Api", "CollatzConjecture.Api\CollatzConjecture.Api.csproj", "{28C375BD-D64A-4A24-B86E-EFC1E1184FD0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CollatzConjecture.Api", "CollatzConjecture.Api\CollatzConjecture.Api.csproj", "{267C07DF-8405-476E-8A7B-B822A43D60B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,9 +29,15 @@ Global
 		{C51065EC-1245-44C3-88C0-F8F2225219BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C51065EC-1245-44C3-88C0-F8F2225219BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C51065EC-1245-44C3-88C0-F8F2225219BD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{28C375BD-D64A-4A24-B86E-EFC1E1184FD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{28C375BD-D64A-4A24-B86E-EFC1E1184FD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{28C375BD-D64A-4A24-B86E-EFC1E1184FD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{28C375BD-D64A-4A24-B86E-EFC1E1184FD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{267C07DF-8405-476E-8A7B-B822A43D60B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{267C07DF-8405-476E-8A7B-B822A43D60B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{267C07DF-8405-476E-8A7B-B822A43D60B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{267C07DF-8405-476E-8A7B-B822A43D60B5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6CCAD815-042F-4B3B-B1EF-5386EBF32127}
 	EndGlobalSection
 EndGlobal
