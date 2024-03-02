@@ -1,0 +1,5 @@
+@CollatzConjecture.Api_HostAddress = http://localhost:5194
+
+GET {{CollatzConjecture.Api_HostAddress}}/number/5
+
+###

@@ -1,0 +1,83 @@
+Pension Marianne
+	Am Hausberg 17, 1234 Irgendwo
+	Dog friendly, organic food
+	Room types:
+		3 x 10 m² single room for 40€
+		10 x 15 m² double room for 60€
+		No rooms with disability access
+		
+Grand Hotel Goldener Hirsch
+	Im stillen Tal 42, 4711 Schönberg
+	Spa, sauna, indoor pool, outdoor pool
+	Room types:
+		10 x 15 m² single room for 70€
+		25 x 30 m² double room for 120€
+		5 x 45 m² junior suites for 190€
+		1 x 100 m² honeymoon suite for 300€
+		All rooms with disability access
+		
+Hotel Blumenhof
+	Rosenstraße 5, 5678 Blumental
+	Bike rental, vegetarian cuisine
+	Room types:
+		5 x 20 m² single room for 50€
+		12 x 25 m² double room for 80€
+		3 x 30 m² family room for 110€
+		No rooms with disability access
+		
+Seeblick Hotel & Spa
+	Seestraße 10, 9999 Seestadt
+	Spa, indoor pool, eCar charging station
+	Room types:
+		8 x 18 m² single room for 65€
+		20 x 22 m² double room for 100€
+		7 x 40 m² deluxe suite for 180€
+		2 x 60 m² penthouse suite for 250€
+		All rooms with disability access
+		
+Hotel Sonnenblick
+	Sonnenallee 3, 3333 Sonnenstadt
+	Outdoor pool, organic food
+	Room types:
+		6 x 25 m² single room for 55€
+		15 x 30 m² double room for 90€
+		4 x 35 m² family room for 120€
+		No rooms with disability access
+		
+Bergoase Resort & Spa
+	Bergstraße 8, 7777 Bergdorf
+	Spa, sauna, indoor pool, outdoor pool
+	Room types:
+		12 x 22 m² single room for 75€
+		18 x 28 m² double room for 110€
+		6 x 40 m² luxury suite for 200€
+		2 x 80 m² presidential suite for 400€
+		All rooms with disability access
+		
+Hotel am Seeufer
+	Uferweg 1, 4444 Seeuferstadt
+	Dog friendly, bike rental, vegetarian cuisine
+	Room types:
+		7 x 20 m² single room for 60€
+		20 x 25 m² double room for 95€
+		5 x 30 m² family room for 130€
+		2 x 50 m² lakeview suite for 220€
+		No rooms with disability access
+		
+Hotel Bergblick
+	Bergstraße 1, 7777 Bergdorf
+	Spa, sauna, indoor pool, outdoor pool
+	Room types:
+		10 x 20 m² single room for 70€
+		20 x 25 m² double room for 110€
+		5 x 30 m² family room for 150€
+		No rooms with disability access
+		
+Hotel Seeblick
+	Seestraße 1, 9999 Seestadt
+	Spa, sauna, indoor pool, outdoor pool
+	Room types:
+		40 x 20 m² single room for 70€
+		20 x 35 m² double room for 190€
+		5 x 60 m² family room for 450€
+		All rooms with disability access
