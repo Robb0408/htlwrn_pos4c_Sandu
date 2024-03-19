@@ -1,0 +1,6 @@
+@ContactList.Swashbuckle.Api_HostAddress = http://localhost:5139
+
+GET {{ContactList.Swashbuckle.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
