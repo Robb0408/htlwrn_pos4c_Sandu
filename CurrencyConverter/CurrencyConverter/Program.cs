@@ -1,7 +1,16 @@
 using CurrencyConverter.Logic;
+using NSwag;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddOpenApiDocument(options =>
+{
+    options.PostProcess = document =>
+    {
+        document.Info.Title = "Currency Converter API";
+        document.Info.Version = "v1";
+    };
+});
 // Add services to the container.
 builder.Services.AddHttpClient("ExchangeRates", client =>
 {
@@ -18,8 +27,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseOpenApi();
+    app.UseSwaggerUi();
 }
 
 app.UseHttpsRedirection();

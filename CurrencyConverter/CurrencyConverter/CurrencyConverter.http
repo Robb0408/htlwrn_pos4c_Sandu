@@ -1,6 +1,18 @@
 @CurrencyConverter_HostAddress = http://localhost:5217
 
-GET {{CurrencyConverter_HostAddress}}/weatherforecast/
+GET {{CurrencyConverter_HostAddress}}/api/products/Car/price?targetCurrency=EUR
+Accept: application/json
+
+###
+GET {{CurrencyConverter_HostAddress}}/api/products/Book/price?targetCurrency=EUR
+Accept: application/json
+
+###
+GET {{CurrencyConverter_HostAddress}}/api/products/Bike/price?targetCurrency=GBP
+Accept: application/json
+
+###
+GET {{CurrencyConverter_HostAddress}}/api/products/Chocolate/price?targetCurrency=USD
 Accept: application/json
 
 ###

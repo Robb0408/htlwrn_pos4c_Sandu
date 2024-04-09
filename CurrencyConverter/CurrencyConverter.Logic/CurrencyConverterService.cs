@@ -33,32 +33,45 @@ namespace CurrencyConverter.Logic
         }
 
         /// <summary>
-        /// Puts the currencies in a dictionary
+        /// Puts the currencies into a dictionary
         /// </summary>
         /// <param name="content">CSV-Data</param>
         /// <returns>Dictionary with currency code as key and exchange rate as value</returns>
         public Dictionary<string, decimal> GetCurrencies(string content)
         {
-            return SplitAndSkipHeadlines(content).Select(parts =>
+            return PrepareLines(content).Select(parts =>
             {
-                return new KeyValuePair<string, decimal>(parts[1], decimal.Parse(parts[2], System.Globalization.NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture));
+                return new KeyValuePair<string, decimal>(parts[1], decimal.Parse(parts[2], NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture));
             }).ToDictionary(x => x.Key, x => x.Value);
         }
 
+        /// <summary>
+        /// Puts the products into a list
+        /// </summary>
+        /// <param name="content">CSV-Data</param>
+        /// <returns>List of products</returns>
         public List<Product> GetProducts(string content)
         {
-            return SplitAndSkipHeadlines(content).Select(parts =>
+            return PrepareLines(content).Select(parts =>
             {
                 return new Product
                 {
                     Description = parts[0],
                     Currency = parts[1],
-                    Price = decimal.Parse(parts[2], System.Globalization.NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture)
+                    Price = decimal.Parse(parts[2], NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture)
                 };
             }).ToList();
         }
 
-        private IEnumerable<string[]> SplitAndSkipHeadlines(string content)
+        /// <summary>
+        /// Helper function to split the CSV-Data string into lines and split the lines into parts
+        /// </summary>
+        /// <remarks>
+        /// Also skips a line (headline) and empty lines
+        /// </remarks>
+        /// <param name="content"></param>
+        /// <returns></returns>
+        private IEnumerable<string[]> PrepareLines(string content)
         {
             return content.Split("\r\n").Where(line => line.Length > 0).Skip(1).Select(line => 
             {
