@@ -55,3 +55,78 @@ builder.Services.AddOpenApiDocument(options =>
 - Access values: e.g. ```configuration["MySetting"]```
 - For nested values use ```Parent:Child```
 - Add user secrets (if needed):  ```builder.Configuration.AddUserSecrets()```
+
+### Options
+```
+builder.Services.Configure<MySettings>(Configuration.GetSection("MySettings"));
+```
+- Use ```IOptions<T>``` interface (```IOptionsSnapshot<T>``` if updates occur)
+
+### AutoMapper
+- Package: AutoMapper
+- Add: ```builder.Services.AddAutoMapper(typeof(MyController))```
+- Flattening by convention
+
+##### Create Mapper Profile
+```
+using AutoMapper;
+
+// Assuming your profile is in the same assembly as Controller
+// otherwise you have to register it manually
+public class ProductMappingProfile : Profile
+{
+    public ProductMappingProfile()
+    {
+    	// Default mappings
+        CreateMap<User, UserDto>();
+        CreateMap<Product, ProductDto>();
+		
+		// Customize mappings - configure members
+        CreateMap<Order, OrderDto>()
+        	.ForMember(dest => dest.Customer, 
+            		   opt => opt.MapFrom(src => src.Customer.Name));
+    }
+}
+```
+
+##### Usage in Service
+```
+public class UserService : IUserService
+{
+    private readonly IMapper mapper;
+    
+    public UserService(IMapper mapper)
+    {
+        this.mapper = mapper;
+    }
+
+    public async Task<UserDto> GetUserByIdAsync(int userId)
+    {
+    	// load user with userID async
+        var user = await  ...
+
+        return mapper.Map<UserDto>(user);
+    }
+}
+```
+
+##### Usage in Controller
+```
+private readonly IMapper mapper;
+private readonly IUserSerive userService;
+
+public UsersController(IUserSerive userService, IMapper mapper)
+{
+	this.userService = userService;
+    this.mapper = mapper;
+}
+
+public async Task<IActionResult<IEnumerable<UserDto>>> GetUsers()
+{
+    var users = await userService.GetAllUsersAsync();
+    var userDtos = _mapper.Map<IEnumerable<UserDto>>(users);
+
+    return Ok(userDtos);
+}
+```
+
