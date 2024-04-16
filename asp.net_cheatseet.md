@@ -67,7 +67,7 @@ builder.Services.Configure<MySettings>(Configuration.GetSection("MySettings"));
 - Add: ```builder.Services.AddAutoMapper(typeof(MyController))```
 - Flattening by convention
 
-##### Create Mapper Profile
+### Create Mapper Profile
 ```
 using AutoMapper;
 
@@ -89,7 +89,7 @@ public class ProductMappingProfile : Profile
 }
 ```
 
-##### Usage in Service
+### Usage in Service
 ```
 public class UserService : IUserService
 {
@@ -110,7 +110,7 @@ public class UserService : IUserService
 }
 ```
 
-##### Usage in Controller
+### Usage in Controller
 ```
 private readonly IMapper mapper;
 private readonly IUserSerive userService;
