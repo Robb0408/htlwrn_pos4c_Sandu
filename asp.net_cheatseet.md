@@ -1,10 +1,10 @@
 # ASP.NET Cheatsheet
 
-### RESTful Naming
+## RESTful Naming
 - Nouns are *good*, verbs are *bad*
 - *Pragmatic REST sometimes e.g.* ```events/OrderByName```
 
-### NSwag
+## NSwag
 - Package: NSwag.AspNetCore
 - Add ```<GenerateDocumentationFile>true</GenerateDocumentationFile>``` to ```<PropertyGroup>```
 - Add ```<NoWarn>$(NoWarn);1591</NoWarn>``` to ```<PropertyGroup>```
@@ -33,13 +33,13 @@ builder.Services.AddOpenApiDocument(options =>
 });
 ```
 
-### DTO Naming
+## DTO Naming
 - POST: ```Create{Entity}Model```
 - GET: ```{Entity}Dto```
 - PUT: ```Update{Entity}Model```
 - DELETE: No model needed
 
-### Data Annotaions for Validation
+## Data Annotaions for Validation
 - Package: Microsoft.Extensions.Configuration / .Json
 - ```[Required]```
 - ```[Range(min, max)]```
@@ -48,7 +48,7 @@ builder.Services.AddOpenApiDocument(options =>
 - ```[Compare(otherPropertyName)]```
 - ```[RegularExpression(regex)]```
 
-### Configuration
+## Configuration
 - *Order matters: last added source will overwrite other existing setting values*
 - Add with e.g. ```builder.Configuration.AddJsonFile("customsettings.json", optional: true, reloadOnChange: true)```
 - Inject with in constructor with ```IConfiguration``` interface
@@ -56,13 +56,13 @@ builder.Services.AddOpenApiDocument(options =>
 - For nested values use ```Parent:Child```
 - Add user secrets (if needed):  ```builder.Configuration.AddUserSecrets()```
 
-### Options
+## Options
 ```
 builder.Services.Configure<MySettings>(Configuration.GetSection("MySettings"));
 ```
 - Use ```IOptions<T>``` interface (```IOptionsSnapshot<T>``` if updates occur)
 
-### AutoMapper
+## AutoMapper
 - Package: AutoMapper
 - Add: ```builder.Services.AddAutoMapper(typeof(MyController))```
 - Flattening by convention
