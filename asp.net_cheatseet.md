@@ -130,3 +130,70 @@ public async Task<IActionResult<IEnumerable<UserDto>>> GetUsers()
 }
 ```
 
+## Logging
+- ASP.NET has integrated logging in ```appsettings.json```
+- Serilog: Enhanced logging
+- Packages: ```Serilog.AspNetCore``` and ```Serilog.Sinks.Console```
+
+### Setup
+```
+// Add Serilog before builder.Build()
+builder.Host.UseSerilog((hostingContext, loggerConfiguration) => 
+   loggerConfiguration
+     .ReadFrom.Configuration(hostingContext.Configuration)
+     .Enrich.FromLogContext()
+     .WriteTo.Console());
+```
+
+### Inject
+```
+public class MyService : IMyService
+{
+    private readonly ILogger<MyService> logger;
+
+    public MyService(ILogger<MyService> logger)
+    {
+        this.logger = logger;
+    }
+
+    public void DoWork()
+    {
+	// Your code here
+        logger.LogInformation("Doing work");
+       
+        // Different Log Levels
+        logger.LogWarning("This is a warning message");
+	logger.LogError("This is an error message");   
+    }
+}
+```
+
+### Sample Usages
+```
+logger.Information("Processing payment for user {UserId} at {Time}", userId, DateTime.Now);
+```
+
+- ```@``` operator in Serilog's message templates to log an object as structured data
+
+```
+public class OrderController : ControllerBase
+{
+  private readonly ILogger<OrderController> logger;
+
+  public OrderController(ILogger<OrderController> logger)
+  {
+    this.logger = logger;
+  }
+
+  public IActionResult Create(Order order)
+  {
+    // Log the order object as structured data
+    logger.LogInformation("Creating order {@Order}", order);
+
+    // Order processing logic...
+  }
+}
+```
+
+## HttpClient
+- see [Slides](https://hauercodes.github.io/htlwrn_pos4c_23_24/)
