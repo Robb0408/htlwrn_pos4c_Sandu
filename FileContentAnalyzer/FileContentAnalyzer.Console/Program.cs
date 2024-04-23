@@ -3,7 +3,7 @@ using FileContentAnalyzer.Logic;
 
 var app = CoconaApp.Create();
 var service = new FileContentAnalyzerService();
-app.AddCommand("wordfrequency", async (string fileName) => 
+app.AddCommand("wordfrequency", async ([Argument] string fileName) => 
 {
     var content = await File.ReadAllTextAsync(fileName);
     var result = service.GetFrequency(content);
@@ -13,14 +13,14 @@ app.AddCommand("wordfrequency", async (string fileName) =>
     }
 });
 
-app.AddCommand("uniquewords", async (string fileName) =>
+app.AddCommand("uniquewords", async ([Argument] string fileName) =>
 {
     var content = await File.ReadAllTextAsync(fileName);
     var result = service.GetUniqueWordsCount(content);
     Console.WriteLine(result);
 });
 
-app.AddCommand("longestwords", async (string fileName) =>
+app.AddCommand("longestwords", async ([Argument] string fileName) =>
 {
     var content = await File.ReadAllTextAsync(fileName);
     var result = service.GetLongestWords(content);
@@ -29,7 +29,7 @@ app.AddCommand("longestwords", async (string fileName) =>
         Console.WriteLine(item);
     }
 });
-app.AddCommand("similarity", async (string fileName1, string fileName2) =>
+app.AddCommand("similarity", async ([Argument] string fileName1, [Argument] string fileName2) =>
 {
     var content1 = await File.ReadAllTextAsync(fileName1);
     var content2 = await File.ReadAllTextAsync(fileName2);
