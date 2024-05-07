@@ -66,22 +66,13 @@ namespace CashRegister.Wpf
             var product = Products.First(p => p.ID == selectedProduct.ID);
 
             // New product -> add item to basket
-            if (Basket.Select(p => p.ProductID).Contains(product.ID))
+            Basket.Add(new ReceiptLineViewModel
             {
-                var p = Basket.First(b => b.ProductID == product.ID);
-                p.Amount++;
-                p.TotalPrice = p.Amount * product.UnitPrice;
-            }
-            else
-            {
-                Basket.Add(new ReceiptLineViewModel
-                {
-                    ProductID = product.ID,
-                    Amount = 1,
-                    ProductName = product.ProductName,
-                    TotalPrice = product.UnitPrice
-                });
-            }
+                ProductID = product.ID,
+                Amount = 1,
+                ProductName = product.ProductName,
+                TotalPrice = product.UnitPrice
+            });
 
             // Inform UI that total sum has changed
             PropertyChanged?.Invoke(this, new(nameof(TotalSum)));
@@ -90,11 +81,12 @@ namespace CashRegister.Wpf
         private async void OnCheckout(object sender, RoutedEventArgs e)
         {
             // Turn all items in the basket into DTO objects
-            var dto = Basket.Select(b => new ReceiptLineDto
-            {
-                ProductID = b.ProductID,
-                Amount = b.Amount
-            }).ToList();
+            var dto = Basket.GroupBy(rl => rl.ProductID)
+                .Select(g => new ReceiptLineDto
+                {
+                    ProductID = g.Key,
+                    Amount = g.Count()
+                });
 
             // Send the receipt to the backend
             var response = await http.PostAsJsonAsync("products/receipts", dto);
