@@ -1,13 +1,13 @@
 ﻿<!-- Note the `d:DataContext` attribute. It will give you IntelliSense by looking
      at your view model during design time. -->
-<Window x:Class="CashRegister.Wpf.MainWindow"
+<Window x:Class="CashRegister.App.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:CashRegister.Wpf"
+        xmlns:local="clr-namespace:CashRegister.App"
         mc:Ignorable="d"
-        d:DataContext="{d:DesignInstance Type=local:MainWindow, IsDesignTimeCreatable=False}"
+        d:DataContext="{d:DesignInstance Type=local:MainWindowViewModel, IsDesignTimeCreatable=False}"
         Title="Cash Register Exercise" Height="700" Width="1000">
     <Window.Resources>
         <!-- WPF Styles are used to format the UI -->
@@ -58,9 +58,15 @@
                     <!-- Note how we turn every item in the itemscontrol into a button by
                             using a data template. -->
                     <DataTemplate>
+                        <!-- Note the use of a command binding here. Read more
+                             at https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/relaycommand
+                             The C# code in the view model will also make commands clearer -->
                         <!-- Note how we reference styles using `StaticResource` -->
+                        <!-- Note the use of `RelativeSource` here. It is used to access properties of 
+                             a parent control (in our case `ItemsControl`) -->
                         <Button Style="{StaticResource ResourceKey=ProductButton}" Content="{Binding Path=ProductName}"
-                                Click="OnAddProduct" />
+                                Command="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.AddToBasketCommand}"
+                                CommandParameter="{Binding Path=ID}" />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
                 <!-- Note how we switch the panel of the itemscontrol to a `WrapPanel`.
@@ -83,8 +89,7 @@
             </Grid.RowDefinitions>
 
             <!-- Note the use of a data grid -->
-            <DataGrid ItemsSource="{Binding Path=Basket}" AutoGenerateColumns="False" IsReadOnly="True"
-                      CanUserAddRows="False">
+            <DataGrid ItemsSource="{Binding Path=Basket}" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Produkt" Binding="{Binding Path=ProductName}" MinWidth="200" />
                     <DataGridTextColumn Header="Menge" Binding="{Binding Path=Amount}" />
@@ -93,7 +98,8 @@
             </DataGrid>
             <TextBlock Grid.Row="1" Text="Gesamtsumme:" Style="{StaticResource ResourceKey=TotalSumText}" />
             <TextBlock Grid.Row="2" Text="{Binding Path=TotalSum}" Style="{StaticResource ResourceKey=TotalSum}" />
-            <Button Grid.Row="4" Style="{StaticResource ResourceKey=CheckoutButton}" Click="OnCheckout">Checkout</Button>
+            <!-- Note the binding of the CheckoutCommand here -->
+            <Button Grid.Row="3" Style="{StaticResource ResourceKey=CheckoutButton}" Command="{Binding CheckoutCommand}">Checkout</Button>
         </Grid>
     </Grid>
 </Window>

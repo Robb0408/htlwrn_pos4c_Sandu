@@ -37,6 +37,8 @@ namespace CashRegister.Wpf
             Timeout = TimeSpan.FromSeconds(5)
         };
 
+        private readonly MainWindowViewModel viewModel;
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         public MainWindow()
@@ -44,7 +46,7 @@ namespace CashRegister.Wpf
             InitializeComponent();
 
             // Set the data context for data binding
-            DataContext = this;
+            DataContext =  viewModel = new MainWindowViewModel();
 
             async Task LoadProducts()
             {

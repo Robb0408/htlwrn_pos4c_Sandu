@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfEvent xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Event>
+    <Id>0</Id>
+    <Description>This is a test description is a longer description than expected omg when does it finally ends jesus christ oh my god</Description>
+    <MaxTime>PT1M10S</MaxTime>
+  </Event>
+  <Event>
+    <Id>1</Id>
+    <Description>This is a test description</Description>
+    <MaxTime>PT2M10S</MaxTime>
+  </Event>
+  <Event>
+    <Id>2</Id>
+    <Description>This is a test description</Description>
+    <MaxTime>PT3M10S</MaxTime>
+  </Event>
+  <Event>
+    <Id>3</Id>
+    <Description>This is a test description</Description>
+    <MaxTime>PT4M10S</MaxTime>
+  </Event>
+  <Event>
+    <Id>4</Id>
+    <Description>This is a test description</Description>
+    <MaxTime>PT5M10S</MaxTime>
+  </Event>
+  <Event>
+    <Id>5</Id>
+    <Description>This is a test description</Description>
+    <MaxTime>PT6M10S</MaxTime>
+  </Event>
+  <Event>
+    <Id>6</Id>
+    <Description>This is a test description</Description>
+    <MaxTime>PT7M10S</MaxTime>
+  </Event>
+  <Event>
+    <Id>7</Id>
+    <Description>This is a test description</Description>
+    <MaxTime>PT8M10S</MaxTime>
+  </Event>
+  <Event>
+    <Id>8</Id>
+    <Description>This is a test description</Description>
+    <MaxTime>PT9M10S</MaxTime>
+  </Event>
+  <Event>
+    <Id>9</Id>
+    <Description>This is a test description</Description>
+    <MaxTime>PT10M10S</MaxTime>
+  </Event>
+  <Event>
+    <Id>10</Id>
+    <Description>This is a test description</Description>
+    <MaxTime>PT11M10S</MaxTime>
+  </Event>
+  <Event>
+    <Id>11</Id>
+    <Description>This is a test description</Description>
+    <MaxTime>PT12M10S</MaxTime>
+  </Event>
+  <Event>
+    <Id>12</Id>
+    <Description>This is a test description</Description>
+    <MaxTime>PT13M10S</MaxTime>
+  </Event>
+  <Event>
+    <Id>13</Id>
+    <Description>This is a test description</Description>
+    <MaxTime>PT14M10S</MaxTime>
+  </Event>
+  <Event>
+    <Id>14</Id>
+    <Description>This is a test description</Description>
+    <MaxTime>PT15M10S</MaxTime>
+  </Event>
+  <Event>
+    <Id>15</Id>
+    <Description>This is a test description</Description>
+    <MaxTime>PT16M10S</MaxTime>
+  </Event>
+</ArrayOfEvent>
