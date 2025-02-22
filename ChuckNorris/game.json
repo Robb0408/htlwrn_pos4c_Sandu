@@ -1,22 +1,66 @@
 {
-    "name": "AB Epic",
+    "name": "My Example Source",
+    "subtitle": "All my apps in one place.",
+    "description": "Welcome to my source! Here you'll find all of my apps.",
+    "iconURL": "https://f000.backblazeb2.com/file/rileytestut/ExampleSource/OctoSource.png",
+    "headerURL": "https://f000.backblazeb2.com/file/rileytestut/ExampleSource/OceanHeader.png",
+    "website": "https://example.com",
+    "tintColor": "#4185A9",
+    "featuredApps": [
+        "com.example.myapp",
+        "com.example.anotherapp"
+    ],
     "apps": [
         {
             "name": "AB Epic",
-            "bundleIdentifier": "com.rob.abepic",
-            "developerName": "Rob",
+            "bundleIdentifier": "com.rob.myapp",
+            "developerName": "Example Developer",
+            "subtitle": "An awesome app.",
             "localizedDescription": "This is an awesome app only available on AltStore.",
-            "iconURL": "https://example.com/icon.png",
+            "iconURL": "https://f000.backblazeb2.com/file/rileytestut/ExampleSource/FishApp.png",
+            "tintColor": "#5CA399",
+            "screenshots": [
+                "https://example.com/myapp_portrait_screenshot1.png",
+                "https://example.com/myapp_portrait_screenshot2.png",
+                {
+                    "imageURL": "https://example.com/myapp_landscape_screenshot.png",
+                    "width": 2556,
+                    "height": 1179
+                }
+            ],
             "versions": [
                 {
-                    "version": "3.3.9",
-                    "localizedDescription": "Latest version with bug fixes and improvements.",
-                    "downloadURL": "https://www.mediafire.com/file/b14cnot3yke75au/ab_epic_ultimate_3.3.9.ipa/file",
-                    "size": 50000000, 
-                    "releaseNotes": "Fixed bugs and improved performance."
+                    "version": "1.1",
+                    "date": "2022-05-01T09:00:00-08:00",
+                    "size": 20000000,
+                    "downloadURL": "https://download2267.mediafire.com/ibt0dult5cegxOqS5mtXSGpND4QVeHzbDvkbxIoyJOIA50Pqd2frFiCAa7x6gp5GEmoGNJ6JfBzwms831cyqtoLrdXMxDmWOaT77dVAb4fBxRXZp-DRj0pA7Ro-7UewLTdgG6IaZ23_bSsJgAcxtsa_wzWacHlo72NW1v5hp-c7B/b14cnot3yke75au/ab+epic+ultimate+3.3.9.ipa",
+                    "localizedDescription": "New features and bug fixes.",
+                    "minOSVersion": "12.0"
                 }
-            ]
+            ],
+            "appPermissions": {
+                "entitlements": [
+                    "com.apple.security.application-groups",
+                    "com.apple.developer.siri"
+                ],
+                "privacy": {
+                    "NSPhotoLibraryUsageDescription": "App saves photos to your Photo Library.",
+                    "NSCameraUsageDescription": "App uses camera to take photos.",
+                    "NSMicrophoneUsageDescription": "App uses microphone to record video."
+                }
+            }
         }
     ],
-    "news": []
+    "news": [
+        {
+            "title": "New Feature Announcement",
+            "identifier": "new_feature",
+            "caption": "Introducing a new feature in AltStore!",
+            "date": "2023-03-15",
+            "tintColor": "#5CA399",
+            "imageURL": "https://example.com/new_feature_image.png",
+            "notify": true,
+            "url": "https://example.com/new_feature_details"
+        }
+    ]
 }
