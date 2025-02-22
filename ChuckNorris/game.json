@@ -1,23 +1,16 @@
 {
     "name": "AB Epic",
-    "subtitle": "All my apps in one place.",
-    "description": "Welcome to my source! Here you'll find all of my apps.",
-    "website": "https://github.com/Robb0408",
-    "tintColor": "#4185A9",
-    "featuredApps": [
-        "com.rob.abepic"
-    ],
     "apps": [
         {
-            "name": "My Example App",
+            "name": "AB Epic",
             "bundleIdentifier": "com.rob.abepic",
-            "developerName": "Example Developer",
-            "subtitle": "An awesome app.",
+            "developerName": "Rob",
             "localizedDescription": "This is an awesome app only available on AltStore.",
-            "iconURL": "https://www.mediafire.com/file/b14cnot3yke75au/ab_epic_ultimate_3.3.9.ipa/file",
-            "tintColor": "#5CA399",
-            "screenshots": [
-            ]
+            "iconURL": "",
+            "downloadURL": "https://www.mediafire.com/file/b14cnot3yke75au/ab_epic_ultimate_3.3.9.ipa/file",
+            "versions": [],
+            "appPermissions": {}
         }
-    ]
+    ],
+    "news": []
 }
