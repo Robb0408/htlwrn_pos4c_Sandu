@@ -6,10 +6,17 @@
             "bundleIdentifier": "com.rob.abepic",
             "developerName": "Rob",
             "localizedDescription": "This is an awesome app only available on AltStore.",
-            "iconURL": "",
+            "iconURL": "https://example.com/icon.png",
             "downloadURL": "https://www.mediafire.com/file/b14cnot3yke75au/ab_epic_ultimate_3.3.9.ipa/file",
-            "versions": [],
-            "appPermissions": {}
+            "versions": [
+                {
+                    "version": "3.3.9",
+                    "localizedDescription": "Latest version with bug fixes and improvements.",
+                    "downloadURL": "https://www.mediafire.com/file/b14cnot3yke75au/ab_epic_ultimate_3.3.9.ipa/file",
+                    "size": 50000000, 
+                    "releaseNotes": "Fixed bugs and improved performance."
+                }
+            ]
         }
     ],
     "news": []
