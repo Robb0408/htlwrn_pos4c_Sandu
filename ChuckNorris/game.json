@@ -7,7 +7,6 @@
             "developerName": "Rob",
             "localizedDescription": "This is an awesome app only available on AltStore.",
             "iconURL": "https://example.com/icon.png",
-            "downloadURL": "https://www.mediafire.com/file/b14cnot3yke75au/ab_epic_ultimate_3.3.9.ipa/file",
             "versions": [
                 {
                     "version": "3.3.9",
