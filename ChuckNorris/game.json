@@ -1,0 +1,26 @@
+{
+    "name": "AB Epic",
+    "identifier": "com.flyinghead.source",
+    "apps": [
+      {
+        "beta": false,
+        "name": "AB Epic",
+        "bundleIdentifier": "com.flyinghead.Flycast",
+        "developerName": "Me",
+        "subtitle": "Dreamcast, Naomi and Atomiswave emulator.",
+        "version": "v2.4",
+        "versionDate": "2024-10-23T15:39:00+02:00",
+        "versionDescription": "Retro achievements, improved UI",
+        "downloadURL": "https://github.com/flyinghead/flycast/releases/download/v2.4/Flycast-2.4.ipa",
+        "localizedDescription": "Flycast is a Dreamcast, Naomi, Naomi 2 and Atomiswave emulator.",
+        "iconURL": "https://github.com/flyinghead/flycast/raw/master/shell/linux/flycast.png",
+        "tintColor": "9b54fd",
+        "size": 7885887,
+        "screenshotURLs": [
+          "https://github.com/flyinghead/flycast/raw/master/shell/imgs/screenshot1.png",
+          "https://github.com/flyinghead/flycast/raw/master/shell/imgs/screenshot2.png",
+          "https://github.com/flyinghead/flycast/raw/master/shell/imgs/screenshot3.png"
+        ]
+      }
+    ]
+  }
